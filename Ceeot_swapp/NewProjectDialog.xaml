@@ -1,0 +1,47 @@
+﻿<Window x:Class="Ceeot_swapp.NewProjectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ceeot_swapp"
+        Title="New Swatt Project" Height="310.167" Width="372.594" ResizeMode="NoResize"
+         WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="0,0,0,3">
+        <GroupBox x:Name="proj_location_grp_box" Header="Project Location" Height="100" 
+                  Margin="0,10,0,0" VerticalAlignment="Top">
+            <StackPanel Orientation="Vertical" Margin="0,3">
+                <StackPanel Orientation="Horizontal" Margin="0,3">
+                    <Label HorizontalAlignment="Left">Project Name</Label>
+                    <TextBox x:Name="proj_name_txt" Width="250" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label HorizontalAlignment="Left">Project Location</Label>
+                    <TextBox  x:Name="proj_loc_txt"  Width="180" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                    <Button Click="openFolderSelectionDialog">Browse</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="proj_version_grp_box" Header="Project Versioning" Height="116" VerticalAlignment="Bottom" Margin="0,3">
+            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel>
+                    <RadioButton x:Name="apex_version_0608" GroupName="ApexVersion" Content="Apex 0604" IsChecked="True" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <RadioButton x:Name="apex_version_0406" GroupName="ApexVersion" Content="Apex 0406"/>
+                </StackPanel>
+                <StackPanel>
+                    <RadioButton x:Name="swatt_version_2005" GroupName="SwatVersion" Content="SWATT 2005" IsChecked="True" Margin="2"/>
+                    <RadioButton x:Name="swatt_version_2009" GroupName="SwatVersion" Content="SWATT 2009" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <RadioButton x:Name="swatt_version_2012" GroupName="SwatVersion" Content="SWATT 2012" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel>
+                    <RadioButton IsChecked="True" GroupName="FEMVersion" Content="FEM Latest" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"></RadioButton>
+                </StackPanel>
+            </DockPanel>
+        </GroupBox>
+        <StackPanel Margin="0,10" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button x:Name="okBtn" Content="Ok" HorizontalAlignment="Right" Height="11" Margin="0" Width="58" RenderTransformOrigin="0.5,0.5" Click="okBtn_Click">
+            </Button>
+            <Button x:Name="cancelBtn" Content="Cancel" HorizontalAlignment="Right" Height="11" Margin="0" Width="68" RenderTransformOrigin="0.5,0.5" Click="cancelBtn_Click">
+            </Button>
+        </StackPanel>
+    </StackPanel>
+</Window>
