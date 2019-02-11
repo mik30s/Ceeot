@@ -47,8 +47,19 @@
                 <MenuItem Header="_Tutorial" />
             </MenuItem>
         </Menu>
-        
-        <StatusBar Height="25" VerticalAlignment="Bottom"></StatusBar>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+            <TabControl x:Name="tab_control" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="tabControl" Height="80">
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="175*"/>
+                            <ColumnDefinition Width="216*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <StatusBar DockPanel.Dock="Bottom" Height="25" VerticalAlignment="Bottom" />
+        </StackPanel>
     </DockPanel>
-   
+
 </Controls:MetroWindow>

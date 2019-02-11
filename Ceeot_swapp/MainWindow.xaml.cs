@@ -39,6 +39,12 @@ namespace Ceeot_swapp
             this.newProjectDialog = new NewProjectDialog();
             this.newProjectDialog.projectManager = this.projectManager;
             this.newProjectDialog.ShowDialog();
+            this.newProjectDialog.Closing += new System.ComponentModel.CancelEventHandler(this.setupProjectUI);
+        }
+
+        public void setupProjectUI(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            ;
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
