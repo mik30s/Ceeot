@@ -32,14 +32,27 @@
     <DockPanel  >
         <DockPanel.Resources >
             <DataTemplate  x:Name="tab_template" x:Key="CustomItemTemplate">
-                <Grid DataContext="{Binding Source={StaticResource TabContent}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400" />
+                        <ColumnDefinition Width="400" />
+                    </Grid.ColumnDefinitions>
                     <!-- Define tab ui here-->
-                    <GroupBox Header="Select Sub-basins">
+                    <GroupBox Grid.Row="0" Grid.Column="0" Header="Select Sub-basins">
                         <Grid>
-                            <TextBox></TextBox>
-                            <ListView x:Name="sub_basin_listview" 
-                                      ItemsSource="{Binding Source={StaticResource tabContent.subBasins}}"></ListView>
-                            <ListView x:Name="inc_sub_basin_listview"></ListView>
+                            <TextBox >{Binding Tabs.Name}</TextBox>
+                            <ListView ></ListView>
+                            <ListView></ListView>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="0" Grid.Column="1" Header="Select Landuse">
+                        <Grid>
+                            <TextBox>{Binding Tabs.Name}</TextBox>
+                            <ListView></ListView>
+                            <ListView ></ListView>
                         </Grid>
                     </GroupBox>
                 </Grid>
@@ -49,7 +62,8 @@
             <MenuItem Header="_Projects">
                 <MenuItem Header="_New" Click="openNewProjectDialog" >
                     <MenuItem.Icon>
-                        <Image Source="resources/appbar.page.new.png"  Width = "16" Height="16" VerticalAlignment = "Center" />
+                        <Image Source="resources/appbar.page.new.png"  
+                               Width = "16" Height="16" VerticalAlignment = "Center" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Open" />
@@ -65,7 +79,8 @@
         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
             <TabControl x:Name="tab_control" VerticalAlignment="Stretch" 
                         HorizontalAlignment="Stretch"  Height="516"
-                        ContentTemplate="{StaticResource CustomItemTemplate}">
+                        ContentTemplate="{StaticResource CustomItemTemplate}"
+                        ItemsSource="{Binding Tabs}">
             </TabControl>
             <StatusBar DockPanel.Dock="Bottom" Height="25" VerticalAlignment="Bottom" />
         </StackPanel>

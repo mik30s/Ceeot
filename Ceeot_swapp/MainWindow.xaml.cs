@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs ;
 using WinForms = System.Windows.Forms;
+using System.Collections.ObjectModel;
 
 namespace Ceeot_swapp
 {
@@ -28,7 +29,7 @@ namespace Ceeot_swapp
         NewProjectDialog newProjectDialog;
         //
         TabContent tabContent;
-
+        ObservableCollection<TabContent> Tabs { get; set; }
 
         public class TabContent
         {
@@ -37,12 +38,18 @@ namespace Ceeot_swapp
         public MainWindow()
         {
             InitializeComponent();
+
             projectManager = new ProjectManager();
             this.tab_control.ItemsSource = projectManager.Projects;
             this.tab_control.SelectionChanged += this.updateCurrentProject;
 
-            this.tabContent = new TabContent();
-            tabContent.subBasins = this.projectManager.getSubBasins();
+            Tabs = new ObservableCollection<TabContent>();
+            Tabs.Add(new TabContent {
+                subBasins = {
+                    //new ProjectManager.Project.SubBasin(),
+                    //new ProjectManager.Project.SubBasin()
+                }
+            });
         }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
