@@ -24,12 +24,25 @@ namespace Ceeot_swapp
             public String location;
             public Version apexVersion;
             public Version swattVersion;
+            public string initialProject;
+            public string initialScenario;
+
+            public struct SubBasin
+            {
+                public string name;
+            }
         }
 
         // store for created projects
-        private Hashtable projectMapping;
+        private Hashtable projectMapping ;
         // the name of the current projects
         private String currentProjectName;
+        public ProjectManager()
+        {
+            this.projectMapping = new Hashtable();
+            projectMapping.Add("New Tab", null);
+        }
+
         public void createProject(String name, String location, Version apexVersion, Version swattVersion) 
         {
             // create project and add it to the store.
@@ -39,6 +52,8 @@ namespace Ceeot_swapp
             project.location = location;
             project.apexVersion = apexVersion;
             project.swattVersion = swattVersion;
+
+            // TODO: Add database connection 
             projectMapping.Add(this.Current, project);
         }
 
@@ -48,7 +63,25 @@ namespace Ceeot_swapp
             set { if (value == "") {
                     throw new ProjectException("Project name cannot be empty");
                 }
+                this.currentProjectName = value;
             }
+        }
+
+        public List<String> Projects
+        {
+            get {
+                var list = new List<String>();
+                foreach (string k in projectMapping.Keys)
+                {
+                    list.Add(k);
+                }
+                return list;
+            }
+        }
+
+        public List<Project.SubBasin> getSubBasins()
+        {
+            return null;
         }
     }
 }

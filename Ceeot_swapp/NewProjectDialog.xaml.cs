@@ -40,12 +40,6 @@ namespace Ceeot_swapp
             this.Close();
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            //do my stuff before closing
-            base.OnClosing(e);
-        }
-
         private void openFolderSelectionDialog(object sender, RoutedEventArgs e)
         {
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
@@ -85,6 +79,7 @@ namespace Ceeot_swapp
             else if (swatt_version_2009.IsChecked == true) swattVersion = ProjectManager.Version.SWATT_2009;
             else if (swatt_version_2012.IsChecked == true) swattVersion = ProjectManager.Version.SWATT_2012;
 
+            Console.WriteLine(name + " " + location);
             // create project with project manager
             this.projectManager.createProject(name, location, apexVersion, swattVersion);
 

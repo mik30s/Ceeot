@@ -29,7 +29,22 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
-    <DockPanel>
+    <DockPanel  >
+        <DockPanel.Resources >
+            <DataTemplate  x:Name="tab_template" x:Key="CustomItemTemplate">
+                <Grid DataContext="{Binding Source={StaticResource TabContent}}">
+                    <!-- Define tab ui here-->
+                    <GroupBox Header="Select Sub-basins">
+                        <Grid>
+                            <TextBox></TextBox>
+                            <ListView x:Name="sub_basin_listview" 
+                                      ItemsSource="{Binding Source={StaticResource tabContent.subBasins}}"></ListView>
+                            <ListView x:Name="inc_sub_basin_listview"></ListView>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </DataTemplate>
+        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Projects">
                 <MenuItem Header="_New" Click="openNewProjectDialog" >
@@ -48,15 +63,9 @@
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-            <TabControl x:Name="tab_control" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="tabControl" Height="80">
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="175*"/>
-                            <ColumnDefinition Width="216*"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </TabItem>
+            <TabControl x:Name="tab_control" VerticalAlignment="Stretch" 
+                        HorizontalAlignment="Stretch"  Height="516"
+                        ContentTemplate="{StaticResource CustomItemTemplate}">
             </TabControl>
             <StatusBar DockPanel.Dock="Bottom" Height="25" VerticalAlignment="Bottom" />
         </StackPanel>

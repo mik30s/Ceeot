@@ -27,24 +27,41 @@ namespace Ceeot_swapp
         ProjectManager projectManager;
         NewProjectDialog newProjectDialog;
         //
+        TabContent tabContent;
 
+
+        public class TabContent
+        {
+            public List<ProjectManager.Project.SubBasin> subBasins;
+        }
         public MainWindow()
         {
             InitializeComponent();
             projectManager = new ProjectManager();
+            this.tab_control.ItemsSource = projectManager.Projects;
+            this.tab_control.SelectionChanged += this.updateCurrentProject;
+
+            this.tabContent = new TabContent();
+            tabContent.subBasins = this.projectManager.getSubBasins();
         }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
         {
             this.newProjectDialog = new NewProjectDialog();
+            this.newProjectDialog.Closing += this.setupProjectUI;
             this.newProjectDialog.projectManager = this.projectManager;
             this.newProjectDialog.ShowDialog();
-            this.newProjectDialog.Closing += new System.ComponentModel.CancelEventHandler(this.setupProjectUI);
         }
 
         public void setupProjectUI(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ;
+            Console.WriteLine("Setting up ui");
+            this.tab_control.ItemsSource = projectManager.Projects;
+        }
+
+        public void updateCurrentProject(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
