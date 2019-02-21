@@ -19,7 +19,7 @@ namespace Ceeot_swapp
             APEX_0604, APEX_0806, SWATT_2005, SWATT_2009, SWATT_2012,
         }
 
-        public struct Project {
+        public class Project {
             public String name;
             public String location;
             public Version apexVersion;
@@ -30,10 +30,42 @@ namespace Ceeot_swapp
             public struct SubBasin
             {
                 public string name;
+                private bool selected;
 
+                public Boolean Selected {
+                    get { return this.selected; }
+                    set { this.selected = value; }
+                }
                 public String Name {
                     get { return this.name; }
                     set { this.name = value; }
+                }
+            }
+
+            public List<ProjectManager.Project.SubBasin> subBasins;
+
+            public Project() {
+                subBasins = new List<SubBasin>();
+            }
+
+            public List<string> SelectedSubBasins {
+                get {
+                    List<string> basins = new List<string>();
+                    foreach (SubBasin s in subBasins) {
+                        if (s.Selected) basins.Add(s.Name);
+                    }
+                    return basins;
+                }
+            }
+
+            public List<string> AllSubBasins {
+                get {
+                    List<string> basins = new List<string>();
+                    foreach (SubBasin s in subBasins)
+                    {
+                        basins.Add(s.Name);
+                    }
+                    return basins;
                 }
             }
         }
@@ -62,6 +94,29 @@ namespace Ceeot_swapp
             projectMapping.Add(this.Current, project);
         }
 
+        public void loadSubBasins()
+        {
+            try
+            {
+                var filenames = System.IO.Directory.GetFiles(CurrentProject.location);
+                foreach (var filename in filenames) {
+                    int extensionStartIdx = filename.IndexOf(".sub", 0);
+                    int lastSlashIdx = filename.LastIndexOf("\\");
+                    if (extensionStartIdx >= 0) {
+                        var basinName = filename.Substring(lastSlashIdx+1, 9);
+                        CurrentProject.subBasins.Add(new Project.SubBasin { name = basinName });
+                    }
+                }
+            } catch (Exception ex) {
+                
+            }
+        }
+
+        public Project CurrentProject
+        {
+            get { return (Project)projectMapping[this.Current]; } 
+        }
+
         public String Current
         {
             get { return this.currentProjectName;  }
@@ -70,23 +125,6 @@ namespace Ceeot_swapp
                 }
                 this.currentProjectName = value;
             }
-        }
-
-        public List<String> Projects
-        {
-            get {
-                var list = new List<String>();
-                foreach (string k in projectMapping.Keys)
-                {
-                    list.Add(k);
-                }
-                return list;
-            }
-        }
-
-        public List<Project.SubBasin> getSubBasins()
-        {
-            return null;
         }
     }
 }

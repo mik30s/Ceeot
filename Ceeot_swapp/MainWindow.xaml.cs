@@ -27,29 +27,13 @@ namespace Ceeot_swapp
         // project manager
         ProjectManager projectManager;
         NewProjectDialog newProjectDialog;
-        //
-        TabContent tabContent;
-        ObservableCollection<TabContent> Tabs { get; set; }
-
-        public class TabContent
-        {
-            public List<ProjectManager.Project.SubBasin> subBasins;
-        }
+ 
         public MainWindow()
         {
             InitializeComponent();
 
             projectManager = new ProjectManager();
-            this.tab_control.ItemsSource = projectManager.Projects;
-            this.tab_control.SelectionChanged += this.updateCurrentProject;
-
-            Tabs = new ObservableCollection<TabContent>();
-            Tabs.Add(new TabContent {
-                subBasins = {
-                    //new ProjectManager.Project.SubBasin(),
-                    //new ProjectManager.Project.SubBasin()
-                }
-            });
+            //this.DataContext = this.projectManager.CurrentProject;
         }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
@@ -63,7 +47,8 @@ namespace Ceeot_swapp
         public void setupProjectUI(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Console.WriteLine("Setting up ui");
-            this.tab_control.ItemsSource = projectManager.Projects;
+            this.projectManager.loadSubBasins();
+            this.DataContext = this.projectManager.CurrentProject;
         }
 
         public void updateCurrentProject(object sender, SelectionChangedEventArgs e)

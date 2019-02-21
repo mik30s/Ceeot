@@ -64,7 +64,7 @@ namespace Ceeot_swapp
                 MessageBox.Show("Project name cannot be empty!", "Project Creation Error");
                 return false;
             }
-            string location = proj_name_txt.Text;
+            string location = proj_loc_txt.Text;
             if (location == "")
             {
                 MessageBox.Show("Project location cannot be empty!", "Project Creation Error");

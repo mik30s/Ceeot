@@ -30,34 +30,6 @@
     </Controls:MetroWindow.RightWindowCommands>
 
     <DockPanel  >
-        <DockPanel.Resources >
-            <DataTemplate  x:Name="tab_template" x:Key="CustomItemTemplate">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="400" />
-                        <ColumnDefinition Width="400" />
-                    </Grid.ColumnDefinitions>
-                    <!-- Define tab ui here-->
-                    <GroupBox Grid.Row="0" Grid.Column="0" Header="Select Sub-basins">
-                        <Grid>
-                            <TextBox >{Binding Tabs.Name}</TextBox>
-                            <ListView ></ListView>
-                            <ListView></ListView>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Grid.Row="0" Grid.Column="1" Header="Select Landuse">
-                        <Grid>
-                            <TextBox>{Binding Tabs.Name}</TextBox>
-                            <ListView></ListView>
-                            <ListView ></ListView>
-                        </Grid>
-                    </GroupBox>
-                </Grid>
-            </DataTemplate>
-        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Projects">
                 <MenuItem Header="_New" Click="openNewProjectDialog" >
@@ -77,11 +49,33 @@
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-            <TabControl x:Name="tab_control" VerticalAlignment="Stretch" 
-                        HorizontalAlignment="Stretch"  Height="516"
-                        ContentTemplate="{StaticResource CustomItemTemplate}"
-                        ItemsSource="{Binding Tabs}">
-            </TabControl>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="400" />
+                </Grid.ColumnDefinitions>
+                <!-- Define tab ui here-->
+                <GroupBox MaxHeight="300" Grid.Row="0" Grid.Column="0" Header="Select Sub-basins">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ListView MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
+                        <ListView MaxHeight="300" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedSubBasins}"></ListView>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="0" Grid.Column="1" Header="Select Landuse">
+                    <Grid>
+                    </Grid>
+                </GroupBox>
+            </Grid>
             <StatusBar DockPanel.Dock="Bottom" Height="25" VerticalAlignment="Bottom" />
         </StackPanel>
     </DockPanel>
