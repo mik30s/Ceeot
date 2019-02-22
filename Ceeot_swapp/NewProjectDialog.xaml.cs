@@ -40,7 +40,7 @@ namespace Ceeot_swapp
             this.Close();
         }
 
-        private void openFolderSelectionDialog(object sender, RoutedEventArgs e)
+        private void openProjectFolderSelectionDialog(object sender, RoutedEventArgs e)
         {
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
@@ -49,6 +49,19 @@ namespace Ceeot_swapp
                     && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     this.proj_loc_txt.Text = fbd.SelectedPath; 
+                }
+            }
+        }
+
+        private void openSwattFolderSelectionDialog(object sender, RoutedEventArgs e)
+        {
+            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = fbd.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK
+                    && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    this.swatt_loc_txt.Text = fbd.SelectedPath;
                 }
             }
         }
@@ -71,6 +84,13 @@ namespace Ceeot_swapp
                 return false;
             }
 
+            string swattLocation = swatt_loc_txt.Text;
+            if (swattLocation == "")
+            {
+                MessageBox.Show("Swatt file(s) location cannot be empty!", "Project Creation Error");
+                return false;
+            }
+
             // select apex version
             if (apex_version_0406.IsChecked == true) apexVersion = ProjectManager.Version.APEX_0604;
             else if (apex_version_0406.IsChecked == true) apexVersion = ProjectManager.Version.APEX_0806;
@@ -80,8 +100,34 @@ namespace Ceeot_swapp
             else if (swatt_version_2012.IsChecked == true) swattVersion = ProjectManager.Version.SWATT_2012;
 
             Console.WriteLine(name + " " + location);
+
+            try
+            {
+                // create project directory.
+                System.IO.Directory.CreateDirectory(location + "//"+ name);
+                System.IO.Directory.CreateDirectory(location + "//" + name + "//" + "apex");
+
+                // copy apex files to apex folder from ceeot installation.
+                var filenames = System.IO.Directory.GetFiles("resources/apex");
+                foreach (var filename in filenames)
+                {
+                    int lastSlashIdx = filename.LastIndexOf(@"\");
+                    string fname = filename.Substring(lastSlashIdx + 1, filename.Length - lastSlashIdx - 1);
+                    System.IO.File.Copy(filename, location + @"\" + name + @"\apex\" + fname);
+                }
+
+                // create table in database for project.
+
+            }
+            catch (UnauthorizedAccessException )
+            {
+                MessageBox.Show("You don't have permissions to create a project in that directory","Project Creation Error");
+            }
+
             // create project with project manager
-            this.projectManager.createProject(name, location, apexVersion, swattVersion);
+            this.projectManager.createProject(name, location, swattLocation, apexVersion, swattVersion);
+
+            
 
             return true;
         }

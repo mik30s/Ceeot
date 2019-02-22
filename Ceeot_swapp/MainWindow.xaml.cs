@@ -36,6 +36,8 @@ namespace Ceeot_swapp
             //this.DataContext = this.projectManager.CurrentProject;
         }
 
+        public ProjectManager.Project.SubBasin SelectedSubBasin { get; set; }
+
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
         {
             this.newProjectDialog = new NewProjectDialog();
@@ -49,11 +51,6 @@ namespace Ceeot_swapp
             Console.WriteLine("Setting up ui");
             this.projectManager.loadSubBasins();
             this.DataContext = this.projectManager.CurrentProject;
-        }
-
-        public void updateCurrentProject(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

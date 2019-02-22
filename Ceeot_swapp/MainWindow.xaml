@@ -12,7 +12,7 @@
         GlowBrush="Black"
         ResizeMode="CanResizeWithGrip"
         ShowTitleBar="True"
-        Title="Ceeopt Swapp" Height="600" Width="800"
+        Title="Ceeopt Swapp" Height="700" Width="800"
         WindowStartupLocation="CenterScreen">
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -67,8 +67,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListView MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
-                        <ListView MaxHeight="300" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedSubBasins}"></ListView>
+                        <ListView SelectedItem="{Binding SelectedSubBasin}" x:Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
+                        <ListView x:Name="selected_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedSubBasins}"></ListView>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="0" Grid.Column="1" Header="Select Landuse">

@@ -22,6 +22,7 @@ namespace Ceeot_swapp
         public class Project {
             public String name;
             public String location;
+            public String swattLocation;
             public Version apexVersion;
             public Version swattVersion;
             public string initialProject;
@@ -80,13 +81,14 @@ namespace Ceeot_swapp
             projectMapping.Add("New Tab", null);
         }
 
-        public void createProject(String name, String location, Version apexVersion, Version swattVersion) 
+        public void createProject(String name, String location, String swattLocation, Version apexVersion, Version swattVersion) 
         {
             // create project and add it to the store.
             this.Current = name;
             var project = new Project();
             project.name = this.Current;
             project.location = location;
+            project.swattLocation = swattLocation;
             project.apexVersion = apexVersion;
             project.swattVersion = swattVersion;
 

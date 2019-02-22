@@ -121,11 +121,81 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="resources\apex\000030000.wth" />
+    <None Include="resources\apex\000040000.wth" />
+    <None Include="resources\apex\000070000.wth" />
+    <None Include="resources\apex\000150000.wth" />
+    <None Include="resources\apex\00030000.dat" />
+    <None Include="resources\apex\00030000.prm" />
+    <None Include="resources\apex\00030000.sba" />
+    <None Include="resources\apex\00030000.sit" />
+    <None Include="resources\apex\00030000.wp1" />
+    <None Include="resources\apex\00030003.opc" />
+    <None Include="resources\apex\00030003.soi" />
+    <None Include="resources\apex\00040000.dat" />
+    <None Include="resources\apex\00070000.dat" />
+    <None Include="resources\apex\00070000.prm" />
+    <None Include="resources\apex\00070000.sba" />
+    <None Include="resources\apex\00070000.sit" />
+    <None Include="resources\apex\00070000.wp1" />
+    <None Include="resources\apex\00070003.opc" />
+    <None Include="resources\apex\00070003.soi" />
+    <None Include="resources\apex\00070004.opc" />
+    <None Include="resources\apex\00070004.soi" />
+    <None Include="resources\apex\00150000.dat" />
+    <None Include="resources\apex\00150000.prm" />
+    <None Include="resources\apex\00150000.sba" />
+    <None Include="resources\apex\00150000.sit" />
+    <None Include="resources\apex\00150000.wp1" />
+    <None Include="resources\apex\00150002.opc" />
+    <None Include="resources\apex\00150002.soi" />
+    <None Include="resources\apex\1P_2003.dat" />
+    <None Include="resources\apex\Apex0604.bat" />
+    <None Include="resources\apex\Apexcont.dat" />
+    <None Include="resources\apex\Apexfile.DAT" />
+    <None Include="resources\apex\ApexRun.dat" />
+    <None Include="resources\apex\APEXRunAll.dat" />
+    <None Include="resources\apex\CHINAG.WND" />
+    <None Include="resources\apex\CROP2110.DAT" />
+    <None Include="resources\apex\Fert2110.dat" />
+    <None Include="resources\apex\File1.cio" />
+    <None Include="resources\apex\File2.cio" />
+    <None Include="resources\apex\Herd0604.dat" />
+    <None Include="resources\apex\MLRN2110.DAT" />
+    <None Include="resources\apex\opcs2110.dat" />
+    <None Include="resources\apex\PARM0604.DAT" />
+    <None Include="resources\apex\Pest2110.dat" />
+    <None Include="resources\apex\PRNT0604.DAT" />
+    <None Include="resources\apex\PSOD2110.DAT" />
+    <None Include="resources\apex\site2110.dat" />
+    <None Include="resources\apex\soil2110.dat" />
+    <None Include="resources\apex\suba2110.dat" />
+    <None Include="resources\apex\SubATemp.sub" />
+    <None Include="resources\apex\Sw0604_2000.bat" />
+    <None Include="resources\apex\Sw0604_2003.bat" />
+    <None Include="resources\apex\swat2003.bat" />
+    <None Include="resources\apex\till2110.dat" />
+    <None Include="resources\apex\TR552110.DAT" />
+    <None Include="resources\apex\Wdlstcom.dat" />
+    <None Include="resources\apex\WIND2110.DAT" />
+    <None Include="resources\apex\wpm12110.dat" />
+    <None Include="resources\apex\Xsuba2110.dat" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="resources\apex\APEX0604.EXE" />
+    <Resource Include="resources\apex\APEXBat.txt" />
+    <Resource Include="resources\apex\CEEOT-Logo.txt" />
+    <Content Include="resources\apex\Local.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\apex\sw0604_2003.exe" />
+    <Content Include="resources\apex\swat2003.exe" />
+    <Content Include="resources\apex\swat2005.exe" />
+    <Content Include="resources\apex\swat_add.exe" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\ceeoticon.ico" />
   </ItemGroup>
