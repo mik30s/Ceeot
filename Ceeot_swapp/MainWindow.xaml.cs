@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs ;
 using WinForms = System.Windows.Forms;
+using SubBasin = Ceeot_swapp.ProjectManager.Project.SubBasin;
+
 using System.Collections.ObjectModel;
 
 namespace Ceeot_swapp
@@ -37,6 +39,18 @@ namespace Ceeot_swapp
         }
 
         public ProjectManager.Project.SubBasin SelectedSubBasin { get; set; }
+
+        private void getSelectedItem(object sender, MouseButtonEventArgs e)
+        {
+            string basinFileName = (string)all_sub_basins_list.SelectedItems[0];
+            System.Windows.MessageBox.Show(basinFileName);
+
+            projectManager.CurrentProject.subBasins.ForEach(delegate(SubBasin b) {
+                if (b.Name == basinFileName) {
+                    b.Selected = true;
+                }
+            });
+        }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
         {

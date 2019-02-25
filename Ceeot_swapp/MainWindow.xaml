@@ -67,7 +67,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListView SelectedItem="{Binding SelectedSubBasin}" x:Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
+                        <ListView SelectedItem="{Binding SelectedSubBasin}" MouseDoubleClick="getSelectedItem" x:Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
                         <ListView x:Name="selected_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedSubBasins}"></ListView>
                     </Grid>
                 </GroupBox>

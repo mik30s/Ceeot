@@ -100,18 +100,16 @@ namespace Ceeot_swapp
         {
             try
             {
-                var filenames = System.IO.Directory.GetFiles(CurrentProject.location);
+                var filenames = System.IO.Directory.GetFiles(CurrentProject.swattLocation);
                 foreach (var filename in filenames) {
-                    int extensionStartIdx = filename.IndexOf(".sub", 0);
+                    int extensionStartIdx = filename.IndexOf(".sub");
                     int lastSlashIdx = filename.LastIndexOf("\\");
                     if (extensionStartIdx >= 0) {
                         var basinName = filename.Substring(lastSlashIdx+1, 9);
                         CurrentProject.subBasins.Add(new Project.SubBasin { name = basinName });
                     }
                 }
-            } catch (Exception ex) {
-                
-            }
+            } catch (Exception ex) {}
         }
 
         public Project CurrentProject
