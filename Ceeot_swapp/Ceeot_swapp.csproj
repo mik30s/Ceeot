@@ -98,6 +98,7 @@
     <Compile Include="NewProjectDialog.xaml.cs">
       <DependentUpon>NewProjectDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Project.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -187,6 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\apex\APEX0604.EXE" />
+    <Content Include="resources\databases\Project_Parameters.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="resources\apex\APEXBat.txt" />
     <Resource Include="resources\apex\CEEOT-Logo.txt" />
     <Content Include="resources\apex\Local.mdb">

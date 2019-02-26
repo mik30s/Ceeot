@@ -13,15 +13,18 @@ namespace Ceeot_swapp
             APEX_0604, APEX_0806, SWATT_2005, SWATT_2009, SWATT_2012,
         }
 
-        public String name;
-        public String location;
-        public String swattLocation;
-        public ProjectVersion apexVersion;
-        public ProjectVersion swattVersion;
-        public string initialProject;
-        public string initialScenario;
-
-       
+        private String name;
+        private String location;
+        private String swattLocation;
+        private ProjectVersion apexVersion;
+        private ProjectVersion swattVersion;
+        
+        public String Name { get { return this.name; } set { this.name = value; } }
+        public String Location { get { return this.location; } set { this.location = value; } }
+        public String SwattLocation { get { return this.swattLocation; } set { this.swattLocation = value; }  }
+        public ProjectVersion ApexVersion { get { return this.apexVersion; } set { this.apexVersion = value; }  }
+        public ProjectVersion SwattVersion { get { return this.swattVersion; } set { this.swattVersion= value; }  }
+        
         public struct SubBasin
         {
             public string name;
@@ -77,5 +80,4 @@ namespace Ceeot_swapp
             }
         }
     }
-
 }

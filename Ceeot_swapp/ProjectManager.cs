@@ -40,21 +40,24 @@ namespace Ceeot_swapp
             // create project and add it to the store.
             this.Current = name;
             var project = new Project();
-            project.name = this.Current;
-            project.location = location;
-            project.swattLocation = swattLocation;
-            project.apexVersion = apexVersion;
-            project.swattVersion = swattVersion;
+            project.Name = this.Current;
+            project.Location = location;
+            project.SwattLocation = swattLocation;
+            project.ApexVersion = apexVersion;
+            project.SwattVersion = swattVersion;
 
             // TODO: Add database connection 
             projectMapping.Add(this.Current, project);
+
+            // insert project into project path table
+            dbManager.setProjectPath(project);
         }
 
         public void loadSubBasins()
         {
             try
             {
-                var filenames = System.IO.Directory.GetFiles(CurrentProject.swattLocation);
+                var filenames = System.IO.Directory.GetFiles(CurrentProject.SwattLocation);
                 foreach (var filename in filenames) {
                     int extensionStartIdx = filename.IndexOf(".sub");
                     int lastSlashIdx = filename.LastIndexOf("\\");
