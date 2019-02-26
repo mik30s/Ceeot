@@ -66,7 +66,7 @@ namespace Ceeot_swapp
                         CurrentProject.SubBasins.Add(new Project.SubBasin { name = basinName });
                     }
                 }
-            } catch (Exception ex) {}
+            } catch (Exception ex) { throw new ProjectException("Failed to load sub basins " + ex.Message); }
         }
 
         public Project CurrentProject

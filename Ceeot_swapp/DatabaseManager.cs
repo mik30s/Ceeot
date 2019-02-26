@@ -12,7 +12,7 @@ namespace Ceeot_swapp
         private System.Data.OleDb.OleDbConnection conn;
         // insert a project path
         private const string SET_PROJECT_PATH_QUERY = 
-            @"INSERT INTO Paths (ProjectName, Scenario, Folder, Version, APEX)
+            @"INSERT INTO Paths (ProjectName, Scenario, Folder, Version1, APEX)
               VALUES ({0}, {1}, {2}, {3}, {4})";
         private OleDbCommand queryCommand;
         
@@ -46,12 +46,16 @@ namespace Ceeot_swapp
 
         public Boolean setProjectPath(Project project)
         {
-            String.Format(SET_PROJECT_PATH_QUERY, project.Name, project.);
+            String versionString = project.ApexVersion.ToString().Replace("_", "") 
+                + " & " + project.SwattVersion.ToString().Replace("_", "");
+
+            String.Format(
+                SET_PROJECT_PATH_QUERY, project.Name, project.CurrentScenario, 
+                project.Location, "4.0", versionString, "\resources\apex"
+            );
+
             this.queryCommand = new OleDbCommand(SET_PROJECT_PATH_QUERY, this.conn);
-            if (queryCommand.ExecuteNonQuery() > 0) {
-                return true;
-            }
-            return false;
+            return queryCommand.ExecuteNonQuery() > 0;
         }
     }
 }

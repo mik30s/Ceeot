@@ -16,12 +16,16 @@ namespace Ceeot_swapp
         private String name;
         private String location;
         private String swattLocation;
+        private String currentScenario;
+
         private ProjectVersion apexVersion;
         private ProjectVersion swattVersion;
         
         public String Name { get { return this.name; } set { this.name = value; } }
         public String Location { get { return this.location; } set { this.location = value; } }
         public String SwattLocation { get { return this.swattLocation; } set { this.swattLocation = value; }  }
+        public String CurrentScenario { get { return this.currentScenario; } set { this.currentScenario = value; } }
+
         public ProjectVersion ApexVersion { get { return this.apexVersion; } set { this.apexVersion = value; }  }
         public ProjectVersion SwattVersion { get { return this.swattVersion; } set { this.swattVersion= value; }  }
         
