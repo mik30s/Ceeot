@@ -43,7 +43,8 @@ namespace Ceeot_swapp
                 }
             }
 
-            public List<ProjectManager.Project.SubBasin> subBasins;
+            private List<ProjectManager.Project.SubBasin> subBasins;
+            private DatabaseManager dbManager;
 
             public Project() {
                 subBasins = new List<SubBasin>();
@@ -78,6 +79,7 @@ namespace Ceeot_swapp
         public ProjectManager()
         {
             this.projectMapping = new Hashtable();
+            this.dbManager = new DatabaseManager();
             projectMapping.Add("New Tab", null);
         }
 
