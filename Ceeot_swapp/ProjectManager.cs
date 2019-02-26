@@ -14,76 +14,28 @@ namespace Ceeot_swapp
 
     public class ProjectManager
     {
-        public enum Version
-        {
-            APEX_0604, APEX_0806, SWATT_2005, SWATT_2009, SWATT_2012,
-        }
-
-        public class Project {
-            public String name;
-            public String location;
-            public String swattLocation;
-            public Version apexVersion;
-            public Version swattVersion;
-            public string initialProject;
-            public string initialScenario;
-
-            public struct SubBasin
-            {
-                public string name;
-                private bool selected;
-
-                public Boolean Selected {
-                    get { return this.selected; }
-                    set { this.selected = value; }
-                }
-                public String Name {
-                    get { return this.name; }
-                    set { this.name = value; }
-                }
-            }
-
-            private List<ProjectManager.Project.SubBasin> subBasins;
-            private DatabaseManager dbManager;
-
-            public Project() {
-                subBasins = new List<SubBasin>();
-            }
-
-            public List<string> SelectedSubBasins {
-                get {
-                    List<string> basins = new List<string>();
-                    foreach (SubBasin s in subBasins) {
-                        if (s.Selected) basins.Add(s.Name);
-                    }
-                    return basins;
-                }
-            }
-
-            public List<string> AllSubBasins {
-                get {
-                    List<string> basins = new List<string>();
-                    foreach (SubBasin s in subBasins)
-                    {
-                        basins.Add(s.Name);
-                    }
-                    return basins;
-                }
-            }
-        }
-
         // store for created projects
         private Hashtable projectMapping ;
         // the name of the current projects
         private String currentProjectName;
+        // manages connection to an apex ms access database
+        private DatabaseManager dbManager;
+
         public ProjectManager()
         {
             this.projectMapping = new Hashtable();
-            this.dbManager = new DatabaseManager();
+            try
+            {
+                this.dbManager = new DatabaseManager();
+            } catch(Exception ex)
+            {
+                throw new ProjectException("Failed to establish connection to database. " + ex.Message);
+            }
             projectMapping.Add("New Tab", null);
         }
 
-        public void createProject(String name, String location, String swattLocation, Version apexVersion, Version swattVersion) 
+        public void createProject(String name, String location, 
+            String swattLocation, Project.ProjectVersion apexVersion, Project.ProjectVersion swattVersion) 
         {
             // create project and add it to the store.
             this.Current = name;
@@ -108,7 +60,7 @@ namespace Ceeot_swapp
                     int lastSlashIdx = filename.LastIndexOf("\\");
                     if (extensionStartIdx >= 0) {
                         var basinName = filename.Substring(lastSlashIdx+1, 9);
-                        CurrentProject.subBasins.Add(new Project.SubBasin { name = basinName });
+                        CurrentProject.SubBasins.Add(new Project.SubBasin { name = basinName });
                     }
                 }
             } catch (Exception ex) {}
