@@ -34,14 +34,15 @@ namespace Ceeot_swapp
             projectMapping.Add("New Tab", null);
         }
 
-        public void createProject(String name, String location, 
-            String swattLocation, Project.ProjectVersion apexVersion, Project.ProjectVersion swattVersion) 
+        public void createProject(String name, String scenario, String location,
+            String swattLocation, Project.ProjectVersion apexVersion, Project.ProjectVersion swattVersion)
         {
             // create project and add it to the store.
             this.Current = name;
             var project = new Project();
             project.Name = this.Current;
             project.Location = location;
+            project.CurrentScenario = scenario;
             project.SwattLocation = swattLocation;
             project.ApexVersion = apexVersion;
             project.SwattVersion = swattVersion;
@@ -49,8 +50,15 @@ namespace Ceeot_swapp
             // TODO: Add database connection 
             projectMapping.Add(this.Current, project);
 
-            // insert project into project path table
-            dbManager.setProjectPath(project);
+            try
+            {
+                // insert project into project path table
+                if (!dbManager.setProjectPath(project)) {
+                    throw new ProjectException("Couldn't update project path in database");
+                }
+            } catch(Exception ex) {
+                throw new ProjectException("Couldn't update project path in database" + ex.Message);
+            }
         }
 
         public void loadSubBasins()

@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 namespace Ceeot_swapp
 {
     public class DatabaseManager
     {
         private System.Data.OleDb.OleDbConnection conn;
-        // insert a project path
-        private const string SET_PROJECT_PATH_QUERY = 
-            @"INSERT INTO Paths (ProjectName, Scenario, Folder, Version1, APEX)
-              VALUES ({0}, {1}, {2}, {3}, {4})";
+        // query to insert a project path
+        private const string SET_PROJECT_PATH_QUERY =
+            @"INSERT INTO Projects (project_name,location,versions,swatt_files_location)VALUES(?, ? ,? , ?);";//'{0}', '{1}', '{2}', '{3}' );";
+
         private OleDbCommand queryCommand;
         
         public DatabaseManager()
@@ -22,11 +23,12 @@ namespace Ceeot_swapp
              this.conn = new OleDbConnection();
             // TODO: Modify the connection string and include any
             // additional required properties for your database.
-            // WARNING: This only works for access databases older than 2007 per:
+            // WARNING: This only works for access databases older than 2007 as per:
             // https://stackoverflow.com/a/17023942
-            this.conn.ConnectionString = 
-                @"Provider=Microsoft.Jet.OLEDB.4.0;" +
-                @"Data source= resources\databases\Project_Parameters.mdb";
+            this.conn.ConnectionString =
+                @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\resources\databases\Project_Parameters.mdb;Persist Security Info=True";
+                //@"Provider=Microsoft.Jet.OLEDB.4.0;" +
+                //@"Data source= resources\databases\Project_Parameters.mdb";
             try
             {
                 this.conn.Open();
@@ -36,26 +38,40 @@ namespace Ceeot_swapp
                 Console.WriteLine(ex.Message);
                 throw ex;
             }
-            finally
-            {
-                this.conn.Close();
-            }
         }
 
-        ~DatabaseManager() { this.conn.Close(); }
+        //~DatabaseManager() { this.conn.Close(); }
 
         public Boolean setProjectPath(Project project)
         {
-            String versionString = project.ApexVersion.ToString().Replace("_", "") 
-                + " & " + project.SwattVersion.ToString().Replace("_", "");
+            if (this.conn.State == System.Data.ConnectionState.Open)
+            {
+                // Build apex, swatt and fem version strings
+                String versionString = project.ApexVersion.ToString().Replace("_", "")
+                    + " & " + project.SwattVersion.ToString().Replace("_", "");
 
-            String.Format(
-                SET_PROJECT_PATH_QUERY, project.Name, project.CurrentScenario, 
-                project.Location, "4.0", versionString, "\resources\apex"
-            );
+                // build query string from project variables
+                /*string queryString = Regex.Replace(String.Format(
+                    SET_PROJECT_PATH_QUERY, 
+                    project.Name,   // Project Name
+                    project.Location, // Project location on drive
+                    versionString, // Project apex & swatt & fem versions used
+                    project.SwattLocation // location of swatt files for Project
+                ), @"\t|\n|\r", ""); ;*/
 
-            this.queryCommand = new OleDbCommand(SET_PROJECT_PATH_QUERY, this.conn);
-            return queryCommand.ExecuteNonQuery() > 0;
+                // build ms access query command
+                this.queryCommand = 
+                    new OleDbCommand(SET_PROJECT_PATH_QUERY, this.conn);
+
+                this.queryCommand.Parameters.Add("@p1", OleDbType.VarWChar).Value = project.Name;
+                this.queryCommand.Parameters.Add("@p2", OleDbType.VarWChar).Value = project.Location;
+                this.queryCommand.Parameters.Add("@p3", OleDbType.VarWChar).Value = versionString;
+                this.queryCommand.Parameters.Add("@p4", OleDbType.VarWChar).Value = project.SwattLocation;
+
+                // execute query and return
+                return queryCommand.ExecuteNonQuery() > 0;
+            }
+            return false;
         }
     }
 }
