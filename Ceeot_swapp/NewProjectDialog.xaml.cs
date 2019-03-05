@@ -83,6 +83,13 @@ namespace Ceeot_swapp
                 return false;
             }
 
+            string scenario = scn_name_txt.Text;
+            if (scenario == "")
+            {
+                MessageBox.Show("Project scenario cannot be empty!", "Project Creation Error");
+                return false;
+            }
+
             string swattLocation = swatt_loc_txt.Text;
             if (swattLocation == "")
             {
@@ -112,7 +119,7 @@ namespace Ceeot_swapp
                 {
                     int lastSlashIdx = filename.LastIndexOf(@"\");
                     string fname = filename.Substring(lastSlashIdx + 1, filename.Length - lastSlashIdx - 1);
-                    System.IO.File.Copy(filename, location + @"\" + name + @"\apex\" + fname);
+                    System.IO.File.Copy(filename, location + @"\" + name + @"\apex\" + fname, true);
                 }
 
                 // create table in database for project.
@@ -124,7 +131,7 @@ namespace Ceeot_swapp
             }
 
             // create project with project manager
-            this.projectManager.createProject(name, location, swattLocation, apexVersion, swattVersion);
+            this.projectManager.createProject(name, scenario, location, swattLocation, apexVersion, swattVersion);
 
             return true;
         }

@@ -13,7 +13,9 @@ namespace Ceeot_swapp
         private System.Data.OleDb.OleDbConnection conn;
         // query to insert a project path
         private const string SET_PROJECT_PATH_QUERY =
-            @"INSERT INTO Projects (project_name,location,versions,swatt_files_location)VALUES(?, ? ,? , ?);";//'{0}', '{1}', '{2}', '{3}' );";
+            @"INSERT INTO Projects ([project_name],location,versions,[swatt_files_location]) VALUES (?, ? ,? , ?);";//'{0}', '{1}', '{2}', '{3}' );";
+        private const string INSERT_SCENARIO_FOR_PROJECT =
+            @"INSERT INTO Scenarios (project_name,scenario_name) VALUES (?,?);";
 
         private OleDbCommand queryCommand;
         
@@ -26,9 +28,9 @@ namespace Ceeot_swapp
             // WARNING: This only works for access databases older than 2007 as per:
             // https://stackoverflow.com/a/17023942
             this.conn.ConnectionString =
-                @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\resources\databases\Project_Parameters.mdb;Persist Security Info=True";
-                //@"Provider=Microsoft.Jet.OLEDB.4.0;" +
-                //@"Data source= resources\databases\Project_Parameters.mdb";
+                //@"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=|DataDirectory|\resources\databases\Project_Parameters.mdb;Persist Security Info=True";
+                @"Provider=Microsoft.Jet.OLEDB.4.0;" +
+                @"Data Source=resources/databases/Project_Parameters.mdb;";
             try
             {
                 this.conn.Open();
@@ -40,7 +42,7 @@ namespace Ceeot_swapp
             }
         }
 
-        //~DatabaseManager() { this.conn.Close(); }
+       // ~DatabaseManager() { this.conn.Close(); }
 
         public Boolean setProjectPath(Project project)
         {
@@ -51,25 +53,37 @@ namespace Ceeot_swapp
                     + " & " + project.SwattVersion.ToString().Replace("_", "");
 
                 // build query string from project variables
-                /*string queryString = Regex.Replace(String.Format(
+                /*
+                string queryString = Regex.Replace(String.Format(
                     SET_PROJECT_PATH_QUERY, 
                     project.Name,   // Project Name
                     project.Location, // Project location on drive
                     versionString, // Project apex & swatt & fem versions used
                     project.SwattLocation // location of swatt files for Project
-                ), @"\t|\n|\r", ""); ;*/
+                ), @"\t|\n|\r", ""); ;
+                */
+
+                // build ms access insert new scenario command
+                this.queryCommand =
+                    new OleDbCommand(INSERT_SCENARIO_FOR_PROJECT, this.conn);
+                this.queryCommand.Parameters.Add("@p1", OleDbType.VarWChar).Value = project.Name;
+                this.queryCommand.Parameters.Add("@p2", OleDbType.VarWChar).Value = project.CurrentScenario;
+
+                var success = queryCommand.ExecuteNonQuery() > 0;
 
                 // build ms access query command
                 this.queryCommand = 
                     new OleDbCommand(SET_PROJECT_PATH_QUERY, this.conn);
 
-                this.queryCommand.Parameters.Add("@p1", OleDbType.VarWChar).Value = project.Name;
+                this.queryCommand.Parameters.Add("@p1", OleDbType.VarChar).Value = project.Name;
                 this.queryCommand.Parameters.Add("@p2", OleDbType.VarWChar).Value = project.Location;
                 this.queryCommand.Parameters.Add("@p3", OleDbType.VarWChar).Value = versionString;
                 this.queryCommand.Parameters.Add("@p4", OleDbType.VarWChar).Value = project.SwattLocation;
 
                 // execute query and return
-                return queryCommand.ExecuteNonQuery() > 0;
+                success = queryCommand.ExecuteNonQuery() > 0;
+
+                return success;
             }
             return false;
         }

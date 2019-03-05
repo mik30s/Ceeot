@@ -4,24 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ceeot_swapp"
-        Title="New Swatt Project" Height="340.167" Width="382.594" ResizeMode="NoResize"
+        Title="New Swatt Project" Height="370.167" Width="382.594" ResizeMode="NoResize"
          WindowStartupLocation="CenterScreen">
     <StackPanel Margin="0,0,0,3">
-        <GroupBox x:Name="proj_location_grp_box" Header="Project Location" Height="130" 
+        <GroupBox x:Name="proj_location_grp_box" Header="Project Location" Height="170" 
                   Margin="0,10,0,0" VerticalAlignment="Top">
             <StackPanel Orientation="Vertical" Margin="0,3">
                 <StackPanel Orientation="Horizontal" Margin="0,3">
                     <Label HorizontalAlignment="Left">Project Name</Label>
-                    <TextBox x:Name="proj_name_txt" Width="250" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                    <TextBox x:Name="proj_name_txt" Text="proj1" Width="280" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label HorizontalAlignment="Left">1st Scenario Name</Label>
+                    <TextBox  x:Name="scn_name_txt"   Text="scn1" Width="253" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label HorizontalAlignment="Left">Swatt file(s) Location</Label>
-                    <TextBox  x:Name="swatt_loc_txt"  Width="180" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                    <TextBox  x:Name="swatt_loc_txt" Text="C:\\Users\\sw_osei\\Downloads\\swatt"  Width="180" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
                     <Button Click="openSwattFolderSelectionDialog">Browse</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label HorizontalAlignment="Left">Project Location</Label>
-                    <TextBox  x:Name="proj_loc_txt"  Width="205" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                    <TextBox  x:Name="proj_loc_txt"  Text="C:\\Users\\sw_osei\\Downloads" Width="205" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
                     <Button Click="openProjectFolderSelectionDialog">Browse</Button>
                 </StackPanel>
             </StackPanel>
