@@ -23,6 +23,9 @@ namespace Ceeot_swapp
         public NewProjectDialog()
         {
             InitializeComponent();
+
+            this.apex_version_0608.IsEnabled = false;
+            this.swatt_version_2005.IsEnabled = false;
         }
 
         private void okBtn_Click(object sender, RoutedEventArgs e)
