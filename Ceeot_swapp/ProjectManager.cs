@@ -35,11 +35,11 @@ namespace Ceeot_swapp
         }
 
         public void createProject(String name, String scenario, String location,
-            String swattLocation, Project.ProjectVersion apexVersion, Project.ProjectVersion swattVersion)
+            String swattLocation, SwattProject.ProjectVersion apexVersion, SwattProject.ProjectVersion swattVersion)
         {
             // create project and add it to the store.
             this.Current = name;
-            var project = new Project();
+            var project = new SwattProject();
             project.Name = this.Current;
             project.Location = location;
             project.CurrentScenario = scenario;
@@ -71,15 +71,15 @@ namespace Ceeot_swapp
                     int lastSlashIdx = filename.LastIndexOf("\\");
                     if (extensionStartIdx >= 0) {
                         var basinName = filename.Substring(lastSlashIdx+1, 9);
-                        CurrentProject.SubBasins.Add(new Project.SubBasin { name = basinName });
+                        CurrentProject.SubBasins.Add(new SwattProject.SubBasin { name = basinName });
                     }
                 }
             } catch (Exception ex) { throw new ProjectException("Failed to load sub basins " + ex.Message); }
         }
 
-        public Project CurrentProject
+        public SwattProject CurrentProject
         {
-            get { return (Project)projectMapping[this.Current]; } 
+            get { return (SwattProject)projectMapping[this.Current]; } 
         }
 
         public String Current

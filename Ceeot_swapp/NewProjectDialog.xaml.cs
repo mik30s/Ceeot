@@ -70,7 +70,7 @@ namespace Ceeot_swapp
 
         public bool createNewProject()
         {
-            Project.ProjectVersion apexVersion = 0, swattVersion = 0;
+            SwattProject.ProjectVersion apexVersion = 0, swattVersion = 0;
 
             // get project name and location
             string name = proj_name_txt.Text;
@@ -101,14 +101,12 @@ namespace Ceeot_swapp
             }
 
             // select apex version
-            if (apex_version_0406.IsChecked == true) apexVersion = Project.ProjectVersion.APEX_0604;
-            else if (apex_version_0406.IsChecked == true) apexVersion = Project.ProjectVersion.APEX_0806;
+            if (apex_version_0406.IsChecked == true) apexVersion = SwattProject.ProjectVersion.APEX_0604;
+            else if (apex_version_0406.IsChecked == true) apexVersion = SwattProject.ProjectVersion.APEX_0806;
             // select swatt version
-            if (swatt_version_2005.IsChecked == true) swattVersion = Project.ProjectVersion.SWATT_2005;
-            else if (swatt_version_2009.IsChecked == true) swattVersion = Project.ProjectVersion.SWATT_2009;
-            else if (swatt_version_2012.IsChecked == true) swattVersion = Project.ProjectVersion.SWATT_2012;
-
-            Console.WriteLine(name + " " + location);
+            if (swatt_version_2005.IsChecked == true) swattVersion = SwattProject.ProjectVersion.SWATT_2005;
+            else if (swatt_version_2009.IsChecked == true) swattVersion = SwattProject.ProjectVersion.SWATT_2009;
+            else if (swatt_version_2012.IsChecked == true) swattVersion = SwattProject.ProjectVersion.SWATT_2012;
 
             try
             {
@@ -125,8 +123,14 @@ namespace Ceeot_swapp
                     System.IO.File.Copy(filename, location + @"\" + name + @"\apex\" + fname, true);
                 }
 
-                // create table in database for project.
-
+                // check if file.cio exists in swat directory
+                var swattFileNames = System.IO.Directory.GetFiles(swattLocation);
+                foreach (var file in swattFileNames) {
+                    if ("file.cio" == file) {
+                        return true;
+                    }
+                }
+                MessageBox.Show("The swatt file location is not a valid one!", "Project Creation Error");
             }
             catch (UnauthorizedAccessException )
             {
@@ -136,7 +140,7 @@ namespace Ceeot_swapp
             // create project with project manager
             this.projectManager.createProject(name, scenario, location, swattLocation, apexVersion, swattVersion);
 
-            return true;
+            return false;
         }
     }
  }

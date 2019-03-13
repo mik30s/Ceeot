@@ -15,7 +15,7 @@ namespace Ceeot_swappTests
 
             // Act
             var projectManager = new ProjectManager();
-            projectManager.createProject("","","","", Project.ProjectVersion.APEX_0604, Project.ProjectVersion.SWATT_2005);
+            projectManager.createProject("","","","", SwattProject.ProjectVersion.APEX_0604, SwattProject.ProjectVersion.SWATT_2005);
             // Assert
             // use mocking framework here.
         }

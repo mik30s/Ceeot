@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs ;
 using WinForms = System.Windows.Forms;
-using SubBasin = Ceeot_swapp.Project.SubBasin;
+using SubBasin = Ceeot_swapp.SwattProject.SubBasin;
 
 using System.Collections.ObjectModel;
 
@@ -38,7 +38,7 @@ namespace Ceeot_swapp
             //this.DataContext = this.projectManager.CurrentProject;
         }
 
-        public Project.SubBasin SelectedSubBasin { get; set; }
+        public SwattProject.SubBasin SelectedSubBasin { get; set; }
 
         private void getSelectedItem(object sender, MouseButtonEventArgs e)
         {

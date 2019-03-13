@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ceeot_swapp
 {
-    public class Project
+    public class SwattProject
     {
         public enum ProjectVersion
         {
@@ -28,6 +28,12 @@ namespace Ceeot_swapp
 
         public ProjectVersion ApexVersion { get { return this.apexVersion; } set { this.apexVersion = value; }  }
         public ProjectVersion SwattVersion { get { return this.swattVersion; } set { this.swattVersion= value; }  }
+
+
+        public ApexProject convertToApex()
+        {
+
+        }
         
         public struct SubBasin
         {
@@ -48,7 +54,7 @@ namespace Ceeot_swapp
 
         private List<SubBasin> subBasins;
 
-        public Project()
+        public SwattProject()
         {
             subBasins = new List<SubBasin>();
         }

@@ -44,7 +44,7 @@ namespace Ceeot_swapp
 
        // ~DatabaseManager() { this.conn.Close(); }
 
-        public Boolean setProjectPath(Project project)
+        public Boolean setProjectPath(SwattProject project)
         {
             if (this.conn.State == System.Data.ConnectionState.Open)
             {
@@ -56,10 +56,10 @@ namespace Ceeot_swapp
                 /*
                 string queryString = Regex.Replace(String.Format(
                     SET_PROJECT_PATH_QUERY, 
-                    project.Name,   // Project Name
-                    project.Location, // Project location on drive
-                    versionString, // Project apex & swatt & fem versions used
-                    project.SwattLocation // location of swatt files for Project
+                    project.Name,   // SwattProject Name
+                    project.Location, // SwattProject location on drive
+                    versionString, // SwattProject apex & swatt & fem versions used
+                    project.SwattLocation // location of swatt files for SwattProject
                 ), @"\t|\n|\r", ""); ;
                 */
 
