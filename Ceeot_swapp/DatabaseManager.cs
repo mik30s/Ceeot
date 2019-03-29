@@ -16,6 +16,8 @@ namespace Ceeot_swapp
             @"INSERT INTO Projects ([project_name],location,versions,[swatt_files_location]) VALUES (?, ? ,? , ?);";//'{0}', '{1}', '{2}', '{3}' );";
         private const string INSERT_SCENARIO_FOR_PROJECT =
             @"INSERT INTO Scenarios (project_name,scenario_name) VALUES (?,?);";
+        private const string INSERT_ALL_BASINS_FOR_PROJECT =
+            @"INSERT INTO Subarea (scenario_name,can_simulate_apex) VALUES (?,?);";
 
         private OleDbCommand queryCommand;
         
@@ -42,7 +44,21 @@ namespace Ceeot_swapp
             }
         }
 
-       // ~DatabaseManager() { this.conn.Close(); }
+        public Boolean fillBasins(SwattProject project, String basinName)
+        {
+            if (this.conn.State == System.Data.ConnectionState.Open)
+            {
+                // build ms access insert new scenario command
+                this.queryCommand =
+                    new OleDbCommand(INSERT_ALL_BASINS_FOR_PROJECT, this.conn);
+                this.queryCommand.Parameters.Add("@p1", OleDbType.VarWChar).Value = project.CurrentScenario;
+                this.queryCommand.Parameters.Add("@p2", OleDbType.Boolean).Value = false;
+
+                // execute query and return
+                return queryCommand.ExecuteNonQuery() > 0;
+            }
+            return false;
+        }
 
         public Boolean setProjectPath(SwattProject project)
         {
@@ -51,17 +67,6 @@ namespace Ceeot_swapp
                 // Build apex, swatt and fem version strings
                 String versionString = project.ApexVersion.ToString().Replace("_", "")
                     + " & " + project.SwattVersion.ToString().Replace("_", "");
-
-                // build query string from project variables
-                /*
-                string queryString = Regex.Replace(String.Format(
-                    SET_PROJECT_PATH_QUERY, 
-                    project.Name,   // SwattProject Name
-                    project.Location, // SwattProject location on drive
-                    versionString, // SwattProject apex & swatt & fem versions used
-                    project.SwattLocation // location of swatt files for SwattProject
-                ), @"\t|\n|\r", ""); ;
-                */
 
                 // build ms access insert new scenario command
                 this.queryCommand =

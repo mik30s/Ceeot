@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ceeot_swapp
 {
-    class ApexProject
+    public class ApexProject
     {
     }
 }

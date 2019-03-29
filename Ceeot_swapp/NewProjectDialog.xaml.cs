@@ -20,12 +20,14 @@ namespace Ceeot_swapp
     public partial class NewProjectDialog : Window
     {
         public ProjectManager projectManager;
-        public NewProjectDialog()
+        public NewProjectDialog(ProjectManager projManager)
         {
             InitializeComponent();
 
             this.apex_version_0608.IsEnabled = false;
             this.swatt_version_2005.IsEnabled = false;
+
+            this.projectManager = projManager;
         }
 
         private void okBtn_Click(object sender, RoutedEventArgs e)
@@ -57,7 +59,7 @@ namespace Ceeot_swapp
 
         private void openSwattFolderSelectionDialog(object sender, RoutedEventArgs e)
         {
-            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+            using (var fbd = new  System.Windows.Forms.FolderBrowserDialog())
             {
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK
@@ -126,20 +128,19 @@ namespace Ceeot_swapp
                 // check if file.cio exists in swat directory
                 var swattFileNames = System.IO.Directory.GetFiles(swattLocation);
                 foreach (var file in swattFileNames) {
-                    if ("file.cio" == file) {
+                    Console.WriteLine(file);
+                    if (swattLocation+"\\file.cio" == file) {
+                        // create project with project manager
+                        this.projectManager.createProject(name, scenario, location, swattLocation, apexVersion, swattVersion);
+                        this.projectManager.loadSubBasins();
                         return true;
-                    }
+                    } 
                 }
-                MessageBox.Show("The swatt file location is not a valid one!", "Project Creation Error");
             }
             catch (UnauthorizedAccessException )
             {
                 MessageBox.Show("You don't have permissions to create a project in that directory","Project Creation Error");
             }
-
-            // create project with project manager
-            this.projectManager.createProject(name, scenario, location, swattLocation, apexVersion, swattVersion);
-
             return false;
         }
     }

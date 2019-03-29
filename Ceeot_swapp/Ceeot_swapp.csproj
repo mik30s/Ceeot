@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CropCodes.cs" />
     <Compile Include="DatabaseManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -108,7 +109,7 @@
     <Compile Include="NewProjectDialog.xaml.cs">
       <DependentUpon>NewProjectDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Project.cs" />
+    <Compile Include="SwattProject.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Project_ParametersDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

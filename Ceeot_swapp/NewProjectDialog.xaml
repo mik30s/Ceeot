@@ -16,7 +16,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label HorizontalAlignment="Left">1st Scenario Name</Label>
-                    <TextBox  x:Name="scn_name_txt"   Text="scn1" Width="253" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
+                    <TextBox  x:Name="scn_name_txt"   Text="Baseline" Width="253" UndoLimit="300" HorizontalAlignment="Right"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label HorizontalAlignment="Left">Swatt file(s) Location</Label>

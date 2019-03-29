@@ -34,6 +34,23 @@ namespace Ceeot_swapp
             projectMapping.Add("New Tab", null);
         }
 
+        public void readFigFile()
+        {
+            String fileName = this.CurrentProject.SwattLocation + "\\fig.fig";
+            String line;
+            //- Read fig file for all sub basins
+            System.IO.StreamReader file = new System.IO.StreamReader(fileName);
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("subbasin"))
+                {
+                    string basinName = file.ReadLine().Trim();
+                    Console.WriteLine("basin name " + basinName);
+                    dbManager.fillBasins(this.CurrentProject, basinName);
+                }
+            }
+        }
+
         public void createProject(String name, String scenario, String location,
             String swattLocation, SwattProject.ProjectVersion apexVersion, SwattProject.ProjectVersion swattVersion)
         {
@@ -56,8 +73,33 @@ namespace Ceeot_swapp
                 if (!dbManager.setProjectPath(project)) {
                     throw new ProjectException("Couldn't update project path in database");
                 }
-            } catch(Exception ex) {
+                //this.readFigFile();
+                this.writeProject(project.Location + "//" + project.Name );
+            }
+            catch (Exception ex) {
                 throw new ProjectException("Couldn't update project path in database" + ex.Message);
+            }
+        }
+
+        public void loadHRUs(SwattProject.SubBasin basin)
+        {
+
+            var b = basin.name.Substring(0,5);
+            var filenames = System.IO.Directory.GetFiles(CurrentProject.SwattLocation,  b + "*.hru");
+            foreach (var fileName in filenames)
+            {
+                System.IO.StreamReader file = new System.IO.StreamReader(fileName);
+                SwattProject.HRU hru = new SwattProject.HRU();
+                CropCodes.Code code;
+                // Extract crop code from first line in file
+                var line = file.ReadLine();
+                line = line.Split()[5];
+                line = line.Split(':')[1];
+                Enum.TryParse(line, out code);
+                // insert code
+                hru.Code = code;
+                // fill description
+                hru.Description = CropCodes.getDescription(hru.Code);
             }
         }
 
@@ -66,15 +108,48 @@ namespace Ceeot_swapp
             try
             {
                 var filenames = System.IO.Directory.GetFiles(CurrentProject.SwattLocation);
+                List<SwattProject.SubBasin> basins = new List<SwattProject.SubBasin>();
                 foreach (var filename in filenames) {
-                    int extensionStartIdx = filename.IndexOf(".sub");
-                    int lastSlashIdx = filename.LastIndexOf("\\");
-                    if (extensionStartIdx >= 0) {
-                        var basinName = filename.Substring(lastSlashIdx+1, 9);
-                        CurrentProject.SubBasins.Add(new SwattProject.SubBasin { name = basinName });
+                    if (!filename.Contains("output")) {
+                        int extensionStartIdx = filename.IndexOf(".sub");
+                        int lastSlashIdx = filename.LastIndexOf("\\");
+                        if (extensionStartIdx >= 0) {
+                            var basinName = filename.Substring(lastSlashIdx + 1, 9);
+                            var basin = new SwattProject.SubBasin { name = basinName };
+                            this.loadHRUs(basin);
+                            basins.Add(basin);
+                        }
                     }
                 }
-            } catch (Exception ex) { throw new ProjectException("Failed to load sub basins " + ex.Message); }
+                this.CurrentProject.SubBasins = basins;
+            } catch (Exception ex) { throw new ProjectException("Failed to load sub basins. " + ex.Message); }
+        }
+
+        public void readProject(String path)
+        {
+            System.Xml.Serialization.XmlSerializer reader =
+                new System.Xml.Serialization.XmlSerializer(typeof(SwattProject));
+
+            System.IO.StreamReader file = new System.IO.StreamReader(path + "//project.xml");
+            SwattProject proj = (SwattProject)reader.Deserialize(file);
+
+            this.Current = proj.Name;
+            // TODO: Add database connection 
+            this.projectMapping.Add(this.Current, proj);
+            this.loadSubBasins();
+
+            file.Close();
+        }
+
+        public void writeProject(String path)
+        {
+            System.Xml.Serialization.XmlSerializer writer =
+            new System.Xml.Serialization.XmlSerializer(typeof(SwattProject));
+
+            System.IO.FileStream file = System.IO.File.Create(path + "//project.xml");
+
+            writer.Serialize(file, this.CurrentProject);
+            file.Close();
         }
 
         public SwattProject CurrentProject

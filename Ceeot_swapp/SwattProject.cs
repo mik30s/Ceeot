@@ -29,31 +29,38 @@ namespace Ceeot_swapp
         public ProjectVersion ApexVersion { get { return this.apexVersion; } set { this.apexVersion = value; }  }
         public ProjectVersion SwattVersion { get { return this.swattVersion; } set { this.swattVersion= value; }  }
 
+        private List<SubBasin> subBasins;
 
-        public ApexProject convertToApex()
+        public ApexProject toApexProject()
         {
+            return null;
+        }
 
+        public struct HRU {
+            CropCodes.Code code;
+            String description;
+            List<SubBasin> subBasin; 
+
+            public CropCodes.Code Code { get {return code; } set { code = value; } }
+            public String Description { get { return description; } set { description = value; } }
+            public List<SubBasin> SubBasin { get { return subBasin;  } set { subBasin = value; } }
         }
         
-        public struct SubBasin
+        public class SubBasin
         {
             public string name;
             private bool selected;
+            private List<HRU> hrus;
 
-            public Boolean Selected
-            {
-                get { return this.selected; }
-                set { this.selected = value; }
-            }
-            public String Name
-            {
-                get { return this.name; }
-                set { this.name = value; }
+            public Boolean Selected { get { return this.selected; } set { this.selected = value; } }
+            public List<HRU> Hrus { get { return this.hrus; } set { this.hrus = value;  } }
+            public String Name { get { return this.name; } set { this.name = value; } }
+
+            public SubBasin(){
+                hrus = new List<HRU>();
             }
         }
-
-        private List<SubBasin> subBasins;
-
+        
         public SwattProject()
         {
             subBasins = new List<SubBasin>();
@@ -62,32 +69,26 @@ namespace Ceeot_swapp
         public List<SubBasin> SubBasins
         {
             get { return this.subBasins; }
+            set { this.subBasins = value; }
         }
 
-        public List<string> SelectedSubBasins
+        public List<HRU> SelectedSubBasinHrus
         {
             get
             {
-                List<string> basins = new List<string>();
-                foreach (SubBasin s in subBasins)
+                List<HRU> hrus = new List<HRU>();
+                foreach (SubBasin s in this.SubBasins)
                 {
-                    if (s.Selected) basins.Add(s.Name);
+                    // If the sub basin was selected add its 
+                    if (s.Selected)
+                    {
+                        s.Hrus.ForEach(h => hrus.Add(h));
+                    }
                 }
-                return basins;
+                return hrus;
             }
         }
 
-        public List<string> AllSubBasins
-        {
-            get
-            {
-                List<string> basins = new List<string>();
-                foreach (SubBasin s in subBasins)
-                {
-                    basins.Add(s.Name);
-                }
-                return basins;
-            }
-        }
+        
     }
 }

@@ -38,7 +38,7 @@
                                Width = "16" Height="16" VerticalAlignment = "Center" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Open" />
+                <MenuItem Header="_Open" Click="openExistingProject" />
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
@@ -54,25 +54,49 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="400" />
                 </Grid.ColumnDefinitions>
                 <!-- Define tab ui here-->
-                <GroupBox MaxHeight="300" Grid.Row="0" Grid.Column="0" Header="Select Sub-basins">
+                <GroupBox MaxHeight="300" Grid.Row="0" Grid.Column="0" Header="Sub-basins">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <ListView Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <CheckBox IsChecked="{Binding Selected}" Content="{Binding Name}"  Checked="selectSubBasin"  FontWeight="Bold"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="0" Grid.Column="1" Header="Landuses">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <ListView SelectedItem="{Binding SelectedSubBasin}" MouseDoubleClick="getSelectedItem" x:Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding AllSubBasins}"></ListView>
-                        <ListView x:Name="selected_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SelectedSubBasins}"></ListView>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Grid.Row="0" Grid.Column="1" Header="Select Landuse">
-                    <Grid>
+                        <ListView Name="all_landuse_list" MaxHeight="300" Grid.Row="0" Grid.Column="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <CheckBox IsChecked="{Binding Selected}"/>
+                                        <TextBlock Text="{Binding Code}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding Description}" FontWeight="Bold" />
+                                        <TextBlock Text="{Binding SubBasin.Name}" FontWeight="Bold" />
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </GroupBox>
             </Grid>
