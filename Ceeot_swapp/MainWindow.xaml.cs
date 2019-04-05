@@ -25,33 +25,27 @@ namespace Ceeot_swapp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
-    {
+    public partial class MainWindow : MetroWindow {
         // project manager
         ProjectManager projectManager;
         NewProjectDialog newProjectDialog;
  
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
 
             projectManager = new ProjectManager();
             //this.DataContext = this.projectManager.CurrentProject;
         }
 
-        private void selectSubBasin(object sender, RoutedEventArgs e)
-        {
+        private void selectSubBasin(object sender, RoutedEventArgs e) {
             string basinFileName = ((CheckBox)sender).Content.ToString();
 
             bool IsActive = (bool)(sender as CheckBox).IsChecked;
-            if (IsActive)
-            {
+            if (IsActive) {
                 int n = this.projectManager.CurrentProject.SubBasins.Count;
-                for (int i = 0; i < n; i++)
-                {
+                for (int i = 0; i < n; i++) {
                     var basin = projectManager.CurrentProject.SubBasins[i];
-                    if (basin.Name == basinFileName)
-                    {
+                    if (basin.Name == basinFileName) {
                         basin.Selected = true;
                     }
                     projectManager.CurrentProject.SubBasins[i] = basin;
@@ -61,30 +55,67 @@ namespace Ceeot_swapp
             } else {
                 // If sub basin is unchecked remove its landuse from land use list
                 foreach( var hru in projectManager.CurrentProject.SelectedSubBasinHrus) {
-                    if (basinFileName == hru.SubBasin)
-                    {
+                    if (basinFileName == hru.SubBasin) {
                         projectManager.CurrentProject.SelectedSubBasinHrus.Remove(hru);
                     }
                 }
-                all_landuse_list.ItemsSource = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
+                all_landuse_list.ItemsSource = 
+                    new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
             }
         }
 
-        public void openNewProjectDialog(object sender, RoutedEventArgs e)
-        {
+        private void selectHru(object sender, RoutedEventArgs e) {
+            var runBlocks = ((sender as CheckBox).Content as TextBlock).Inlines;
+            string[] hruText = new string[3];
+            int i = 0;
+            foreach (var r in runBlocks) { 
+                if (i % 2 == 0) { 
+                    hruText[i] = (r as Run).Text.ToString();
+                    i++;
+                }
+            }
+            bool IsActive = (bool)(sender as CheckBox).IsChecked;
+
+            if (IsActive) {
+                // extract hru and basin name
+                var basins = this.projectManager.CurrentProject.SubBasins;
+                // fill needed hru values for basin search
+                var basinName = hruText[2];
+                var hruDescription = hruText[1];
+                var hruCropCodeString = hruText[0];
+                
+                // find the basin
+                foreach (var b in basins) {
+                    // if the right basin is found
+                    if (b.Name == basinName) {
+                        // find the right hru
+                        foreach (var h in b.Hrus) {
+                            // convert code string to code enum value
+                            CropCodes.Code code = (CropCodes.Code)Enum.Parse(typeof(CropCodes.Code), hruCropCodeString);
+                            if (h.Code == code && h.Description == hruDescription) {
+                                var hru = h;
+                                hru.Selected = true;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+            }
+        }
+
+        public void openNewProjectDialog(object sender, RoutedEventArgs e) {
             this.newProjectDialog = new NewProjectDialog(this.projectManager);
             this.newProjectDialog.Closing += this.setupProjectUI;
             this.newProjectDialog.ShowDialog();
         }
 
-        public void openExistingProject(object sender, RoutedEventArgs e)
-        {
-            using (var fbd = new WinForms.FolderBrowserDialog())
-            {
+        public void openExistingProject(object sender, RoutedEventArgs e) {
+            using (var fbd = new WinForms.FolderBrowserDialog()) {
                 WinForms.DialogResult result = fbd.ShowDialog();
 
-                if (result == WinForms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
+                if (result == WinForms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath)) {
                     projectManager.readProject(fbd.SelectedPath);
                     all_sub_basins_list.ItemsSource 
                         = new ObservableCollection<SubBasin>(projectManager.CurrentProject.SubBasins);
@@ -94,22 +125,24 @@ namespace Ceeot_swapp
             }
         }
 
-        public void setupProjectUI(object sender, System.ComponentModel.CancelEventArgs e)
-        {
+        public void setupProjectUI(object sender, System.ComponentModel.CancelEventArgs e) {
             Console.WriteLine("Setting up ui");
-            all_sub_basins_list.ItemsSource
-                = new ObservableCollection<SubBasin>(projectManager.CurrentProject.SubBasins);
-            all_landuse_list.ItemsSource
-                = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
+            var basinListSize = projectManager.CurrentProject.SubBasins.Capacity;
+            if (basinListSize > 0) {
+                all_sub_basins_list.ItemsSource
+                    = new ObservableCollection<SubBasin>(projectManager.CurrentProject.SubBasins);
+                all_landuse_list.ItemsSource
+                    = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
+            }
         }
 
         public void createApex(object sender, RoutedEventArgs e) {
-
+            this.projectManager.convertSwattProjectToApex();
         }
 
         public void createApexControl(object sender, RoutedEventArgs e)
         {
-
+         
         }
 
         public void createApexOperations(object sender, RoutedEventArgs e)

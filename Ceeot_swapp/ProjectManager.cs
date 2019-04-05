@@ -20,6 +20,8 @@ namespace Ceeot_swapp
         private String currentProjectName;
         // manages connection to an apex ms access database
         private DatabaseManager dbManager;
+        // apex project equivalent of the current swatt project
+        private ApexProject apexProject;
 
         public ProjectManager()
         {
@@ -107,6 +109,11 @@ namespace Ceeot_swapp
             basin.Hrus = hrus;
         }
 
+        public void convertSwattProjectToApex()
+        {
+
+        }
+
         public void loadSubBasins()
         {
             try
@@ -158,7 +165,11 @@ namespace Ceeot_swapp
 
         public SwattProject CurrentProject
         {
-            get { return (SwattProject)projectMapping[this.Current]; } 
+            get {
+                return (this.Current != null) 
+                        ? (SwattProject)projectMapping[this.Current] 
+                        : null;
+            }
         }
 
         public String Current

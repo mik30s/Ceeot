@@ -106,10 +106,9 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <WrapPanel>
-                                            <CheckBox IsChecked="{Binding Selected}" >
+                                            <CheckBox IsChecked="{Binding Selected}" Checked="selectHru" Unchecked="selectHru" FontWeight="Bold">
                                                 <CheckBox.Content>
                                                     <TextBlock>
-                                                          <Run Text=""/>
                                                           <Run Text="{Binding Code}"/>
                                                           <Run Text=" | "/>
                                                           <Run Text="{Binding Description}"/>

@@ -8,8 +8,7 @@ namespace Ceeot_swapp
 {
     public class SwattProject
     {
-        public enum ProjectVersion
-        {
+        public enum ProjectVersion {
             APEX_0604, APEX_0806, SWATT_2005, SWATT_2009, SWATT_2012,
         }
 
@@ -31,23 +30,19 @@ namespace Ceeot_swapp
 
         private List<SubBasin> subBasins;
 
-        public ApexProject toApexProject()
-        {
-            return null;
-        }
-
         public struct HRU {
             CropCodes.Code code;
             String description;
-            String subBasin; 
+            String subBasin;
+            bool selected;
 
             public CropCodes.Code Code { get {return code; } set { code = value; } }
             public String Description { get { return description; } set { description = value; } }
             public String SubBasin { get { return subBasin;  } set { subBasin = value; } }
+            public bool Selected { get { return selected;  } set { selected = value; } }
         }
         
-        public class SubBasin
-        {
+        public class SubBasin {
             public string name;
             private bool selected;
             private List<HRU> hrus;
@@ -56,34 +51,27 @@ namespace Ceeot_swapp
             public List<HRU> Hrus { get { return this.hrus; } set { this.hrus = value;  } }
             public String Name { get { return this.name; } set { this.name = value; } }
 
-            public SubBasin(){
+            public SubBasin() {
                 hrus = new List<HRU>();
             }
         }
         
-        public SwattProject()
-        {
+        public SwattProject() {
             subBasins = new List<SubBasin>();
         }
 
-        public List<SubBasin> SubBasins
-        {
-            get { return this.subBasins; }
+        public List<SubBasin> SubBasins {
+            get { return (this.subBasins.Capacity > 0) ? this.subBasins : new List<SubBasin>(); }
             set { this.subBasins = value; }
         }
 
-        public List<HRU> SelectedSubBasinHrus
-        {
-            get
-            {
+        public List<HRU> SelectedSubBasinHrus {
+            get {
                 List<HRU> hrus = new List<HRU>();
-                foreach (SubBasin s in this.SubBasins)
-                {
+                foreach (SubBasin s in this.SubBasins) {
                     // If the sub basin was selected add its 
-                    if (s.Selected)
-                    {
-                        foreach (var h in s.Hrus)
-                        {
+                    if (s.Selected) {
+                        foreach (var h in s.Hrus) {
                             hrus.Add(h);
                         }
                     }
