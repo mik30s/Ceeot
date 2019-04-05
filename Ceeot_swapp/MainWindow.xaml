@@ -10,9 +10,9 @@
         ShowIconOnTitleBar="True"
         BorderThickness="0" 
         GlowBrush="Black"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         ShowTitleBar="True"
-        Title="Ceeopt Swapp" Height="700" Width="800"
+        Title="Ceeopt Swapp" Height="730" Width="500"
         WindowStartupLocation="CenterScreen">
 
     <Controls:MetroWindow.LeftWindowCommands>
@@ -34,13 +34,23 @@
             <MenuItem Header="_Projects">
                 <MenuItem Header="_New" Click="openNewProjectDialog" >
                     <MenuItem.Icon>
-                        <Image Source="resources/appbar.page.new.png"  
-                               Width = "16" Height="16" VerticalAlignment = "Center" />
+                        <Image Source="resources/appbar.folder.star.png"  
+                               Width = "24" Height="24" VerticalAlignment = "Center" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Open" Click="openExistingProject" />
+                <MenuItem Header="_Open" Click="openExistingProject">
+                    <MenuItem.Icon>
+                        <Image Source="resources/appbar.folder.open.png"  
+                               Width = "24" Height="24" VerticalAlignment = "Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Header="_Exit">
+                    <MenuItem.Icon>
+                        <Image Source="resources/appbar.close.png"  
+                               Width = "24" Height="24" VerticalAlignment = "Center" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_Swatt User Help" />
@@ -49,57 +59,137 @@
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-            <Grid>
+            <Grid HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="400" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="350" />
                 </Grid.ColumnDefinitions>
                 <!-- Define tab ui here-->
-                <GroupBox MaxHeight="300" Grid.Row="0" Grid.Column="0" Header="Sub-basins">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150" />
-                        </Grid.ColumnDefinitions>
-                        <ListView Name="all_sub_basins_list" MaxHeight="300" Grid.Row="0" Grid.Column="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <WrapPanel>
-                                        <CheckBox IsChecked="{Binding Selected}" Content="{Binding Name}"  Checked="selectSubBasin"  FontWeight="Bold"/>
-                                    </WrapPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
+                <GroupBox Grid.Row="0" Grid.Column="0" Header="Sub-basins" HorizontalAlignment="Center">
+                    <WrapPanel>
+                        <ToolBar>
+                            <Button />
+                        </ToolBar>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" />
+                            </Grid.ColumnDefinitions>
+                            <ListView Name="all_sub_basins_list" MaxHeight="370"  Grid.Row="0" Grid.Column="0">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <CheckBox IsChecked="{Binding Selected}" Content="{Binding Name}"  Checked="selectSubBasin" Unchecked="selectSubBasin" FontWeight="Bold"/>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </WrapPanel>
                 </GroupBox>
-                <GroupBox Grid.Row="0" Grid.Column="1" Header="Landuses">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <ListView Name="all_landuse_list" MaxHeight="300" Grid.Row="0" Grid.Column="0">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <WrapPanel>
-                                        <CheckBox IsChecked="{Binding Selected}"/>
-                                        <TextBlock Text="{Binding Code}" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding Description}" FontWeight="Bold" />
-                                        <TextBlock Text="{Binding SubBasin.Name}" FontWeight="Bold" />
-                                    </WrapPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
+                <GroupBox Grid.Row="0" Grid.Column="1" Header="Landuse">
+                    <WrapPanel>
+                        <ToolBar />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ListView Name="all_landuse_list" MaxHeight="370" Grid.Row="0" Grid.Column="0">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <CheckBox IsChecked="{Binding Selected}" >
+                                                <CheckBox.Content>
+                                                    <TextBlock>
+                                                          <Run Text=""/>
+                                                          <Run Text="{Binding Code}"/>
+                                                          <Run Text=" | "/>
+                                                          <Run Text="{Binding Description}"/>
+                                                          <Run Text=" | "/>
+                                                          <Run Text="{Binding SubBasin}"/>
+                                                    </TextBlock>
+                                                </CheckBox.Content>
+                                            </CheckBox>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </WrapPanel>
                 </GroupBox>
             </Grid>
+            <GroupBox Header="Apex" Height="240" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="120" />
+                    </Grid.ColumnDefinitions>
+                    <Button Click="createApex"  Grid.Row="0" Grid.Column="0">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.page.new.png" Height="70" />
+                            <TextBlock Text="New" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexControl" Grid.Row="0" Grid.Column="1" > 
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.settings.png" Height="70" />
+                            <TextBlock Text="Control" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexOperations" Grid.Row="0" Grid.Column="2">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.list.check.png" Height="70" />
+                            <TextBlock Text="Operations" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexSubAreas" Grid.Row="0" Grid.Column="3">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.map.satellite.png" Height="70" />
+                            <TextBlock Text="Subarea" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexSoils" Grid.Row="1" Grid.Column="0">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.soil.png" Height="70"/>
+                            <TextBlock Text="Soil" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexSite" Grid.Row="1" Grid.Column="1">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.map.location.add.png" Height="70"/>
+                            <TextBlock Text="Site" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexWeather" Grid.Row="1" Grid.Column="2">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.weather.overcast.png" Height="70" />
+                            <TextBlock Text="Weather" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                    <Button Click="createApexWeatherStation" Grid.Row="1" Grid.Column="3">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="resources/appbar.weather.symbol.png" Height="70" />
+                            <TextBlock Text="Weather Station" HorizontalAlignment="Center"  />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </GroupBox>
             <StatusBar DockPanel.Dock="Bottom" Height="25" VerticalAlignment="Bottom" />
         </StackPanel>
     </DockPanel>

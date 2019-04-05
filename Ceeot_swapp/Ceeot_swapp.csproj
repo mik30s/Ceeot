@@ -221,6 +221,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\apex\APEX0604.EXE" />
+    <Resource Include="resources\appbar.page.new.png" />
+    <Resource Include="resources\appbar.settings.png" />
+    <Resource Include="resources\appbar.list.check.png" />
+    <Resource Include="resources\appbar.map.location.add.png" />
+    <Resource Include="resources\appbar.map.satellite.png" />
+    <Resource Include="resources\appbar.weather.overcast.png" />
+    <Resource Include="resources\appbar.weather.symbol.png" />
+    <Resource Include="resources\appbar.soil.png" />
+    <Resource Include="resources\appbar.folder.open.png" />
+    <Resource Include="resources\appbar.folder.star.png" />
+    <Resource Include="resources\appbar.close.png" />
     <Content Include="resources\databases\Project_Parameters.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

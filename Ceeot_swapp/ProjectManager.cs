@@ -83,8 +83,8 @@ namespace Ceeot_swapp
 
         public void loadHRUs(SwattProject.SubBasin basin)
         {
-
             var b = basin.name.Substring(0,5);
+            List<SwattProject.HRU> hrus = new List<SwattProject.HRU>();
             var filenames = System.IO.Directory.GetFiles(CurrentProject.SwattLocation,  b + "*.hru");
             foreach (var fileName in filenames)
             {
@@ -100,7 +100,11 @@ namespace Ceeot_swapp
                 hru.Code = code;
                 // fill description
                 hru.Description = CropCodes.getDescription(hru.Code);
+                hru.SubBasin = basin.Name;
+                // add hru to sub basin
+                hrus.Add(hru);
             }
+            basin.Hrus = hrus;
         }
 
         public void loadSubBasins()

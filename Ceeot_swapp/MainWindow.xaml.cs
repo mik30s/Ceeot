@@ -42,18 +42,32 @@ namespace Ceeot_swapp
         private void selectSubBasin(object sender, RoutedEventArgs e)
         {
             string basinFileName = ((CheckBox)sender).Content.ToString();
-            //System.Windows.MessageBox.Show(basinFileName);
 
-            int n = this.projectManager.CurrentProject.SubBasins.Count;
-            for(int i =0; i < n; i++ ) {
-                var basin = projectManager.CurrentProject.SubBasins[i];
-                if (basin.Name == basinFileName) {
-                    basin.Selected = true;
+            bool IsActive = (bool)(sender as CheckBox).IsChecked;
+            if (IsActive)
+            {
+                int n = this.projectManager.CurrentProject.SubBasins.Count;
+                for (int i = 0; i < n; i++)
+                {
+                    var basin = projectManager.CurrentProject.SubBasins[i];
+                    if (basin.Name == basinFileName)
+                    {
+                        basin.Selected = true;
+                    }
+                    projectManager.CurrentProject.SubBasins[i] = basin;
                 }
-                projectManager.CurrentProject.SubBasins[i] = basin;
+                var hrus = projectManager.CurrentProject.SelectedSubBasinHrus;
+                all_landuse_list.ItemsSource = new ObservableCollection<HRU>(hrus);
+            } else {
+                // If sub basin is unchecked remove its landuse from land use list
+                foreach( var hru in projectManager.CurrentProject.SelectedSubBasinHrus) {
+                    if (basinFileName == hru.SubBasin)
+                    {
+                        projectManager.CurrentProject.SelectedSubBasinHrus.Remove(hru);
+                    }
+                }
+                all_landuse_list.ItemsSource = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
             }
-            all_landuse_list.ItemsSource
-                = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
         }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e)
@@ -87,6 +101,47 @@ namespace Ceeot_swapp
                 = new ObservableCollection<SubBasin>(projectManager.CurrentProject.SubBasins);
             all_landuse_list.ItemsSource
                 = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
+        }
+
+        public void createApex(object sender, RoutedEventArgs e) {
+
+        }
+
+        public void createApexControl(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void createApexOperations(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void createApexSubAreas(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void createApexSoils(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        public void createApexSite(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        public void createApexWeather(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void createApexWeatherStation(object sender, RoutedEventArgs e)
+        {
+
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

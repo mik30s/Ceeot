@@ -39,11 +39,11 @@ namespace Ceeot_swapp
         public struct HRU {
             CropCodes.Code code;
             String description;
-            List<SubBasin> subBasin; 
+            String subBasin; 
 
             public CropCodes.Code Code { get {return code; } set { code = value; } }
             public String Description { get { return description; } set { description = value; } }
-            public List<SubBasin> SubBasin { get { return subBasin;  } set { subBasin = value; } }
+            public String SubBasin { get { return subBasin;  } set { subBasin = value; } }
         }
         
         public class SubBasin
@@ -82,7 +82,10 @@ namespace Ceeot_swapp
                     // If the sub basin was selected add its 
                     if (s.Selected)
                     {
-                        s.Hrus.ForEach(h => hrus.Add(h));
+                        foreach (var h in s.Hrus)
+                        {
+                            hrus.Add(h);
+                        }
                     }
                 }
                 return hrus;
