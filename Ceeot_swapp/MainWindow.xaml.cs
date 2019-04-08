@@ -66,43 +66,45 @@ namespace Ceeot_swapp
 
         private void selectHru(object sender, RoutedEventArgs e) {
             var runBlocks = ((sender as CheckBox).Content as TextBlock).Inlines;
+            // extract hru code and hru description
             string[] hruText = new string[3];
-            int i = 0;
+            int i = 0, j = 0;
             foreach (var r in runBlocks) { 
-                if (i % 2 == 0) { 
-                    hruText[i] = (r as Run).Text.ToString();
-                    i++;
+                if (i % 4 == 0) { 
+                    hruText[j] = (r as Run).Text.ToString();
+                    j++;
                 }
+                i++;
             }
             bool IsActive = (bool)(sender as CheckBox).IsChecked;
 
-            if (IsActive) {
-                // extract hru and basin name
-                var basins = this.projectManager.CurrentProject.SubBasins;
-                // fill needed hru values for basin search
-                var basinName = hruText[2];
-                var hruDescription = hruText[1];
-                var hruCropCodeString = hruText[0];
+            // extract hru and basin name
+            var basins = this.projectManager.CurrentProject.SubBasins;
+            // fill needed hru values for basin search
+            var basinName = hruText[2];
+            var hruDescription = hruText[1];
+            var hruCropCodeString = hruText[0];
                 
-                // find the basin
-                foreach (var b in basins) {
-                    // if the right basin is found
-                    if (b.Name == basinName) {
-                        // find the right hru
-                        foreach (var h in b.Hrus) {
-                            // convert code string to code enum value
-                            CropCodes.Code code = (CropCodes.Code)Enum.Parse(typeof(CropCodes.Code), hruCropCodeString);
-                            if (h.Code == code && h.Description == hruDescription) {
-                                var hru = h;
-                                hru.Selected = true;
-                            }
+            // find the basin
+            for (int n = 0; n < this.projectManager.CurrentProject.SubBasins.Count; n++) {
+                // if the right basin is found
+                var basin = this.projectManager.CurrentProject.SubBasins[n];
+                if (basin.Name == basinName) {
+                    // find the right hru
+                    for (int m = 0; m < basin.Hrus.Count; m++) {    
+                        var hru = basin.Hrus[m];
+                        // Convert code string to code enum value
+                        CropCodes.Code code = (CropCodes.Code)Enum.Parse(typeof(CropCodes.Code), hruCropCodeString);
+                        if (hru.Code == code && hru.Description == hruDescription) {
+                            if (IsActive) hru.Selected = true;
+                            else hru.Selected = false;
                         }
+                        basin.Hrus[m] = hru;
                     }
                 }
+                this.projectManager.CurrentProject.SubBasins[n] = basin;
             }
-            else
-            {
-            }
+            all_landuse_list.ItemsSource = new ObservableCollection<HRU>(projectManager.CurrentProject.SelectedSubBasinHrus);
         }
 
         public void openNewProjectDialog(object sender, RoutedEventArgs e) {

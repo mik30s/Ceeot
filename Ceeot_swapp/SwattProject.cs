@@ -61,7 +61,7 @@ namespace Ceeot_swapp
         }
 
         public List<SubBasin> SubBasins {
-            get { return (this.subBasins.Capacity > 0) ? this.subBasins : new List<SubBasin>(); }
+            get { return (this.subBasins.Count > 0) ? this.subBasins : new List<SubBasin>(); }
             set { this.subBasins = value; }
         }
 
@@ -79,7 +79,5 @@ namespace Ceeot_swapp
                 return hrus;
             }
         }
-
-        
     }
 }
