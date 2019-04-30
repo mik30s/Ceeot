@@ -114,7 +114,7 @@ namespace Ceeot_swapp
             {
                 // create project directory.
                 System.IO.Directory.CreateDirectory(location + "//"+ name);
-                System.IO.Directory.CreateDirectory(location + "//" + name + "//" + "apex");
+                System.IO.Directory.CreateDirectory(location + "//" + name + "//" + "APEX");
 
                 // copy apex files to apex folder from ceeot installation.
                 var filenames = System.IO.Directory.GetFiles("resources/apex");
@@ -122,7 +122,7 @@ namespace Ceeot_swapp
                 {
                     int lastSlashIdx = filename.LastIndexOf(@"\");
                     string fname = filename.Substring(lastSlashIdx + 1, filename.Length - lastSlashIdx - 1);
-                    System.IO.File.Copy(filename, location + @"\" + name + @"\apex\" + fname, true);
+                    System.IO.File.Copy(filename, location + @"\" + name + @"\APEX\" + fname, true);
                 }
 
                 // check if file.cio exists in swat directory

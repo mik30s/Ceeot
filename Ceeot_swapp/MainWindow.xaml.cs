@@ -18,6 +18,8 @@ using WinForms = System.Windows.Forms;
 using SubBasin = Ceeot_swapp.SwattProject.SubBasin;
 using HRU = Ceeot_swapp.SwattProject.HRU;
 
+using CEEOT_dll;
+
 using System.Collections.ObjectModel;
 
 namespace Ceeot_swapp
@@ -139,17 +141,17 @@ namespace Ceeot_swapp
         }
 
         public void createApex(object sender, RoutedEventArgs e) {
-            this.projectManager.convertSwattProjectToApex();
+            //this.projectManager.convertSwattProjectToApex();
         }
 
         public void createApexControl(object sender, RoutedEventArgs e)
         {
-         
+            this.projectManager.createApexControlFiles();
         }
 
         public void createApexOperations(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createApexOperationsFiles();
         }
 
         public void createApexSubAreas(object sender, RoutedEventArgs e)
@@ -176,6 +178,31 @@ namespace Ceeot_swapp
 
         public void createApexWeatherStation(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void selectAllSubBasins(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void deselectAllSubBasins(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void selectAllHrus(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+
+        private void deselectAllHrus(object sender, RoutedEventArgs e)
+        {
+
 
         }
 

@@ -21,7 +21,9 @@ namespace Ceeot_swapp
         // manages connection to an apex ms access database
         private DatabaseManager dbManager;
         // apex project equivalent of the current swatt project
-        private ApexProject apexProject;
+        private string apexBatFile;
+        private string swatVersionBatFile;
+        private string swatAuxVersionBatFile;
 
         public ProjectManager()
         {
@@ -36,9 +38,75 @@ namespace Ceeot_swapp
             projectMapping.Add("New Tab", null);
         }
 
+        public void createApexControlFiles()
+        {
+            CEEOT_dll.Control.Apexcont(0);
+            // load pest file
+            var pestFile = "";
+            if (pestFile == "" && pestFile == " ")
+                CEEOT_dll.Control.Pesticide();
+            CEEOT_dll.Control.Fertilizer();
+        }
+
+        public void createApexOperationsFiles()
+        {
+            if (!this.validateLandUses()) {
+                return;
+            }
+
+            // Create Control files
+            this.cpyApex();
+            var g = new System.IO.StreamWriter(System.IO.File.OpenWrite(CEEOT_dll.Initial.Output_files + @"\" + CEEOT_dll.Initial.Opcs));
+            g.Close();
+            g.Dispose();
+            string num = "3";
+            CEEOT_dll.Sitefiles.FEMFiles(ref num);
+            CEEOT_dll.Sitefiles.SiteFiles(ref num);
+            CEEOT_dll.Initial.CurrentOption = 24;
+        }
+
+        // copy apex files
+        public void cpyApex()
+        {
+            var rs = CEEOT_dll.AccessDB.getDBDataTable("SELECT * FROM Input_Files WHERE Version=" + "'" + CEEOT_dll.Initial.Version + "'");
+
+            for (int i = 0; i < rs.Rows.Count ; i++)
+            {
+                var filet = "";
+                var fileo = CEEOT_dll.Initial.OrgDir + "\\" + rs.Rows[i]["File"];
+                if (((String)rs.Rows[i]["file"]).ToCharArray()[0] == '*') {
+                    filet = CEEOT_dll.Initial.Output_files + "\\";
+                } else {
+                    filet = CEEOT_dll.Initial.Output_files + "\\" + rs.Rows[i]["File"];
+                }
+                if ((String)rs.Rows[i]["File"] == "APEX2110_2000.EXE") {
+                    fileo = CEEOT_dll.Initial.OrgDir + "\\" + rs.Rows[i]["File"];
+                    filet = CEEOT_dll.Initial.Output_files + "\\APEX2110.EXE";
+                }
+                System.IO.File.Copy(fileo, filet, true);
+            }
+
+            rs = CEEOT_dll.AccessDB.getDBDataTable("SELECT * FROM apexfile_dat WHERE Version='" + CEEOT_dll.Initial.Version + "' ORDER BY apexfile_dat.Order");
+
+            System.IO.StreamWriter z = null;
+            if (CEEOT_dll.Initial.Version == "3.0.0" || CEEOT_dll.Initial.Version == "3.1.0") {
+                z = new System.IO.StreamWriter(System.IO.File.Create(CEEOT_dll.Initial.Output_files + "\\EPICfile.DAT"));
+            } else {
+                z = new System.IO.StreamWriter(System.IO.File.Create(CEEOT_dll.Initial.Output_files + "\\Apexfile.DAT"));
+            }
+            for (int i = 0; i < rs.Rows.Count; i++) {
+                z.Write(" ");
+                var tmp = String.Format("{0, -5}", ((String)rs.Rows[i]["FileCode"]).ToUpper());
+                z.Write(tmp);
+                z.Write("    ");
+                z.WriteLine(rs.Rows[i]["FileName"]);
+            }
+            z.Close();
+        }
+
         public void readFigFile()
         {
-            String fileName = this.CurrentProject.SwattLocation + "\\fig.fig";
+            String fileName = this.CurrentProject.SwattLocation + @"\fig.fig";
             String line;
             //- Read fig file for all sub basins
             System.IO.StreamReader file = new System.IO.StreamReader(fileName);
@@ -46,7 +114,7 @@ namespace Ceeot_swapp
             {
                 if (line.Contains("subbasin"))
                 {
-                    string basinName = file.ReadLine().Trim();
+                    string basinName = file. ReadLine().Trim();
                     Console.WriteLine("basin name " + basinName);
                     dbManager.fillBasins(this.CurrentProject, basinName);
                 }
@@ -60,7 +128,7 @@ namespace Ceeot_swapp
             this.Current = name;
             var project = new SwattProject();
             project.Name = this.Current;
-            project.Location = location;
+            project.Location = location + @"\" + project.Name ;
             project.CurrentScenario = scenario;
             project.SwattLocation = swattLocation;
             project.ApexVersion = apexVersion;
@@ -76,7 +144,8 @@ namespace Ceeot_swapp
                     throw new ProjectException("Couldn't update project path in database");
                 }
                 //this.readFigFile();
-                this.writeProject(project.Location + "//" + project.Name );
+                this.writeProject(project.Location);
+                CEEOTDLLManager.initializeGlobals(this);
             }
             catch (Exception ex) {
                 throw new ProjectException("Couldn't update project path in database" + ex.Message);
@@ -109,9 +178,85 @@ namespace Ceeot_swapp
             basin.Hrus = hrus;
         }
 
-        public void convertSwattProjectToApex()
+        public bool validateLandUses()
         {
+            string swBat = "";
+            var exclude = new System.Data.DataTable();
+            exclude = CEEOT_dll.AccessDB.getDBDataTable("SELECT * FROM exclude WHERE folder='"
+                + this.CurrentProject.Location + "' AND project = '" + this.CurrentProject.Name + "'");
+            // select version
+            this.selectVersion();
+            return (exclude.Rows.Count <= 0);
+        }
 
+        public void selectVersion()
+        {
+            switch (CEEOT_dll.Initial.Version) {
+                case "1.0.0":    //versions 1.x.x were changed from APEX0806 to APEX0806 (Last one). 1/14/2015
+                    apexBatFile = "Apex0806.bat";
+                    swatVersionBatFile = "Sw0604_2000.bat";
+                    swatAuxVersionBatFile = "Swat2000.bat";
+                    break;
+                case "1.1.0":
+                    apexBatFile = "Apex0806.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2003.bat";
+                    break;
+                case "1.2.0":
+                    apexBatFile = "Apex0806.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2009.bat";
+                    break;
+                //<New version of SWAT_2012 is added
+                case "1.3.0":
+                    apexBatFile = "Apex0806.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2012.bat";
+                    //4/16/2013>
+                    break;
+                case "2.0.0":
+                    apexBatFile = "Apex2110.bat";
+                    swatVersionBatFile = "Sw2110_2000.bat";
+                    swatAuxVersionBatFile = "Swat2000.bat";
+                    break;
+                case "2.1.0":
+                    apexBatFile = "Apex2110.bat";
+                    swatVersionBatFile = "Sw2110_2003.bat";
+                    swatAuxVersionBatFile = "Swat2003.bat";
+                    break;
+                case "3.0.0":
+                    apexBatFile = "Epic3060.bat";
+                        break;
+                case "3.1.0":
+                    apexBatFile = "Epic3060.bat";
+                    break;
+                case "4.0.0":
+                    apexBatFile = "Apex0604.bat";
+                    swatVersionBatFile = "Sw0604_2000.bat";
+                    swatAuxVersionBatFile = "Swat2000.bat";
+                    break;
+                case "4.1.0":
+                    apexBatFile = "Apex0604.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2003.bat";
+                    break;
+                case "4.2.0":
+                    apexBatFile = "Apex0604.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2009.bat";
+                    break;
+                //<New version of SWAT_2012 is added
+                case "2.3.0":
+                    apexBatFile = "Apex2110.bat";
+                    swatVersionBatFile = "Sw2110_2003.bat";
+                    swatAuxVersionBatFile = "Swat2012.bat";
+                    break;
+                case "4.3.0":
+                    apexBatFile = "Apex0604.bat";
+                    swatVersionBatFile = "Sw0604_2003.bat";
+                    swatAuxVersionBatFile = "Swat2012.bat";
+                    break;
+                }
         }
 
         public void loadSubBasins()
@@ -123,7 +268,7 @@ namespace Ceeot_swapp
                 foreach (var filename in filenames) {
                     if (!filename.Contains("output")) {
                         int extensionStartIdx = filename.IndexOf(".sub");
-                        int lastSlashIdx = filename.LastIndexOf("\\");
+                        int lastSlashIdx = filename.LastIndexOf(@"\");
                         if (extensionStartIdx >= 0) {
                             var basinName = filename.Substring(lastSlashIdx + 1, 9);
                             var basin = new SwattProject.SubBasin { name = basinName };
@@ -141,13 +286,14 @@ namespace Ceeot_swapp
             System.Xml.Serialization.XmlSerializer reader =
                 new System.Xml.Serialization.XmlSerializer(typeof(SwattProject));
 
-            System.IO.StreamReader file = new System.IO.StreamReader(path + "//project.xml");
+            System.IO.StreamReader file = new System.IO.StreamReader(path + @"\project.xml");
             SwattProject proj = (SwattProject)reader.Deserialize(file);
 
             this.Current = proj.Name;
             // TODO: Add database connection 
             this.projectMapping.Add(this.Current, proj);
             this.loadSubBasins();
+            CEEOTDLLManager.initializeGlobals(this);
 
             file.Close();
         }
@@ -157,7 +303,7 @@ namespace Ceeot_swapp
             System.Xml.Serialization.XmlSerializer writer =
             new System.Xml.Serialization.XmlSerializer(typeof(SwattProject));
 
-            System.IO.FileStream file = System.IO.File.Create(path + "//project.xml");
+            System.IO.FileStream file = System.IO.File.Create(path + @"\project.xml");
 
             writer.Serialize(file, this.CurrentProject);
             file.Close();

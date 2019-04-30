@@ -64,7 +64,18 @@
                 <GroupBox Grid.Row="0" Grid.Column="0" Header="Sub-basins" HorizontalAlignment="Center">
                     <WrapPanel>
                         <ToolBar>
-                            <Button />
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="selectAllSubBasins">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Height="24" Width="24" Source="resources/appbar.section.expand.all.png" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Click="deselectAllSubBasins">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image  Height="24" Width="24" Source="resources/appbar.section.collapse.all.png" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </ToolBar>
                         <Grid>
                             <Grid.RowDefinitions>
@@ -87,7 +98,20 @@
                 </GroupBox>
                 <GroupBox Grid.Row="0" Grid.Column="1" Header="Landuse">
                     <WrapPanel>
-                        <ToolBar />
+                        <ToolBar>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="selectAllHrus">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image  Height="24" Width="24" Source="resources/appbar.section.expand.all.png" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Click="deselectAllHrus">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image  Height="24" Width="24" Source="resources/appbar.section.collapse.all.png" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </ToolBar>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
