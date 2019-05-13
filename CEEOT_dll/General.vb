@@ -4,398 +4,398 @@ Option Explicit On
 Imports System.IO
 Imports VB = Microsoft.VisualBasic
 
-Friend Class General
-	Private mvarfilehru As String 'local copy
-	Private mvarfileName As String 'local copy
-	Private mvarfilepnd As String 'local copy
-	Private mvarfilerte As String 'local copy
-	Private mvarnumber As Short 'local copy
-	Private mvarflag As Boolean 'local copy
-	Private mvarfilesub As String 'local copy
- 	Private mvarfilesol As String 'local copy
- 	Private mvarfilesoi As String 'local copy
- 	Private mvarfilemgt As String 'local copy
- 	Private mvarfilewht As String 'local copy
-	Private mvarLast As Object 'local copy
-	Private mvarLasttmp As Object 'local copy
- 	Private mvarfilesit As String 'local copy
- 	Private mvarfilewp1 As String 'local copy
- 	Private mvarfilewgn As String 'local copy
- 	Private mvarfilewpm As String 'local copy
- 	Private mvarfilechm As String 'local copy
-	'Grazing Information
-	Private mvarManureID As Short
- 	Private mvarBioConsumed As Single
-	Private mvarManureProduced As Single
-	
-	Dim value As String
+Public Class General
+    Private mvarfilehru As String 'local copy
+    Private mvarfileName As String 'local copy
+    Private mvarfilepnd As String 'local copy
+    Private mvarfilerte As String 'local copy
+    Private mvarnumber As Short 'local copy
+    Private mvarflag As Boolean 'local copy
+    Private mvarfilesub As String 'local copy
+    Private mvarfilesol As String 'local copy
+    Private mvarfilesoi As String 'local copy
+    Private mvarfilemgt As String 'local copy
+    Private mvarfilewht As String 'local copy
+    Private mvarLast As Object 'local copy
+    Private mvarLasttmp As Object 'local copy
+    Private mvarfilesit As String 'local copy
+    Private mvarfilewp1 As String 'local copy
+    Private mvarfilewgn As String 'local copy
+    Private mvarfilewpm As String 'local copy
+    Private mvarfilechm As String 'local copy
+    'Grazing Information
+    Private mvarManureID As Short
+    Private mvarBioConsumed As Single
+    Private mvarManureProduced As Single
+
+    Dim value As String
     Dim NumberFormat As String
     Dim roundformat As Integer
     Dim lenFormat As Integer
-	Dim convertFormat As Convertion
-	Private wsa1 As Single
-	
-	'local variable(s) to hold property value(s)
-	
-	
- Public Property filechm() As String
-  Get
-   'used when retrieving value of a property, on the right side of an assignment.
-   'Syntax: Debug.Print X.filechm
-        If IsReference(mvarfilechm) Then
-          filechm = mvarfilechm
-        Else
-          filechm = mvarfilechm
-        End If
-  End Get
-  Set(ByVal Value As String)
-   If IsReference(Value) And Not TypeOf Value Is String Then
-    'used when assigning an Object to the property, on the left side of a Set statement.
-    'Syntax: Set x.filechm = Form1
-    mvarfilechm = Value
-   Else
-    'used when assigning a value to the property, on the left side of an assignment.
-    'Syntax: X.filechm = 5
+    Dim convertFormat As Convertion
+    Private wsa1 As Single
+
+    'local variable(s) to hold property value(s)
+
+
+    Public Property filechm() As String
+        Get
+            'used when retrieving value of a property, on the right side of an assignment.
+            'Syntax: Debug.Print X.filechm
+            If IsReference(mvarfilechm) Then
+                filechm = mvarfilechm
+            Else
+                filechm = mvarfilechm
+            End If
+        End Get
+        Set(ByVal Value As String)
+            If IsReference(Value) And Not TypeOf Value Is String Then
+                'used when assigning an Object to the property, on the left side of a Set statement.
+                'Syntax: Set x.filechm = Form1
                 mvarfilechm = Value
-   End If
-  End Set
- End Property
-	
- Public WriteOnly Property filewpm() As String
-  Set(ByVal Value As String)
+            Else
+                'used when assigning a value to the property, on the left side of an assignment.
+                'Syntax: X.filechm = 5
+                mvarfilechm = Value
+            End If
+        End Set
+    End Property
+
+    Public WriteOnly Property filewpm() As String
+        Set(ByVal Value As String)
             mvarfilewpm = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filewgn() As String
-  Set(ByVal Value As String)
+        End Set
+    End Property
+
+    Public WriteOnly Property filewgn() As String
+        Set(ByVal Value As String)
             mvarfilewgn = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filewp1() As String
-  Set(ByVal Value As String)
+        End Set
+    End Property
+
+    Public WriteOnly Property filewp1() As String
+        Set(ByVal Value As String)
             mvarfilewp1 = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filesit() As String
-  Set(ByVal Value As String)
+        End Set
+    End Property
+
+    Public WriteOnly Property filesit() As String
+        Set(ByVal Value As String)
             mvarfilesit = Value
-  End Set
- End Property
-	
-	Public Property Last() As Object
-		Get
+        End Set
+    End Property
+
+    Public Property Last() As Object
+        Get
             Last = mvarLast
-		End Get
-		Set(ByVal Value As Object)
+        End Get
+        Set(ByVal Value As Object)
             mvarLast = Value
-		End Set
-	End Property
-	
-	
-	Public Property Lasttmp() As Object
-		Get
+        End Set
+    End Property
+
+
+    Public Property Lasttmp() As Object
+        Get
             Lasttmp = mvarLasttmp
-		End Get
-		Set(ByVal Value As Object)
+        End Get
+        Set(ByVal Value As Object)
             mvarLasttmp = Value
-		End Set
-	End Property
- Public WriteOnly Property filewht() As String
-  Set(ByVal Value As String)
-   mvarfilewht = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filemgt() As String
-  Set(ByVal Value As String)
-   mvarfilemgt = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filesol() As String
-  Set(ByVal Value As String)
-   mvarfilesol = Value
-  End Set
- End Property
-	
- Public WriteOnly Property filesoi() As String
-  Set(ByVal Value As String)
+        End Set
+    End Property
+    Public WriteOnly Property filewht() As String
+        Set(ByVal Value As String)
+            mvarfilewht = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property filemgt() As String
+        Set(ByVal Value As String)
+            mvarfilemgt = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property filesol() As String
+        Set(ByVal Value As String)
+            mvarfilesol = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property filesoi() As String
+        Set(ByVal Value As String)
             mvarfilesoi = Value
-  End Set
- End Property
-	
-	Public WriteOnly Property filename() As String
-		Set(ByVal Value As String)
-			mvarfileName = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property fileSub() As String
-		Set(ByVal Value As String)
-			mvarfilesub = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property filehru() As String
-		Set(ByVal Value As String)
-			mvarfilehru = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property filerte() As String
-		Set(ByVal Value As String)
-			mvarfilerte = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property filepnd() As String
-		Set(ByVal Value As String)
-			mvarfilepnd = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property number() As Short
-		Set(ByVal Value As Short)
-			mvarnumber = Value
-		End Set
-	End Property
-	
-	Public WriteOnly Property flag() As Boolean
-		Set(ByVal Value As Boolean)
-			mvarflag = Value
-		End Set
-	End Property
-	
-Public Sub wpm11310()
-Dim temp As String
-Dim longitude As String
-Dim altitude As String = String.Empty
-Dim current_line, i, j As Integer
-Dim p As Object
-Dim fs As Object
-'Dim adoConnection As ADODB.Connection
-Dim ADORecordset As DataTable
-Dim TakeField As Convertion
-Dim value As String
+        End Set
+    End Property
 
-    On Error GoTo goError
+    Public WriteOnly Property filename() As String
+        Set(ByVal Value As String)
+            mvarfileName = Value
+        End Set
+    End Property
 
-    TakeField = New Convertion
-    'adoConnection = New ADODB.Connection
-    'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
-    'adoConnection.Open()
-    ADORecordset = New DataTable
-    ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Wpm11310' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
-    convertFormat = New Convertion
-    fs = CreateObject("Scripting.FileSystemObject")
+    Public WriteOnly Property fileSub() As String
+        Set(ByVal Value As String)
+            mvarfilesub = Value
+        End Set
+    End Property
 
-    p = fs.OpenTextFile(Initial.Output_files & "\" & Initial.wpm1, 8, True)
+    Public WriteOnly Property filehru() As String
+        Set(ByVal Value As String)
+            mvarfilehru = Value
+        End Set
+    End Property
 
-    With ADORecordset
-        '.MoveFirst()
-        current_line = .Rows(0).Item("Line")
-        For j = 0 To .Rows.Count - 1
-        'Do While .EOF <> True
-            If (.Rows(j).Item("SwatFile") <> "") Then
-                Select Case .Rows(j).Item("SwatFile")
-                 Case "*.wgn"
-                    TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
-                End Select
+    Public WriteOnly Property filerte() As String
+        Set(ByVal Value As String)
+            mvarfilerte = Value
+        End Set
+    End Property
 
-                TakeField.Leng = .Rows(j).Item("Leng")
-                TakeField.LineNum = .Rows(j).Item("Lines")
-                TakeField.Inicia = .Rows(j).Item("Inicia")
-                value = TakeField.value()
-            Else
-                If .Rows(j).Item("Value") = "Blank" Then
-                 value = " "
+    Public WriteOnly Property filepnd() As String
+        Set(ByVal Value As String)
+            mvarfilepnd = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property number() As Short
+        Set(ByVal Value As Short)
+            mvarnumber = Value
+        End Set
+    End Property
+
+    Public WriteOnly Property flag() As Boolean
+        Set(ByVal Value As Boolean)
+            mvarflag = Value
+        End Set
+    End Property
+
+    Public Sub wpm11310()
+        Dim temp As String
+        Dim longitude As String
+        Dim altitude As String = String.Empty
+        Dim current_line, i, j As Integer
+        Dim p As Object
+        Dim fs As Object
+        'Dim adoConnection As ADODB.Connection
+        Dim ADORecordset As DataTable
+        Dim TakeField As Convertion
+        Dim value As String
+
+        On Error GoTo goError
+
+        TakeField = New Convertion
+        'adoConnection = New ADODB.Connection
+        'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
+        'adoConnection.Open()
+        ADORecordset = New DataTable
+        ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Wpm11310' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        convertFormat = New Convertion
+        fs = CreateObject("Scripting.FileSystemObject")
+
+        p = fs.OpenTextFile(Initial.Output_files & "\" & Initial.wpm1, 8, True)
+
+        With ADORecordset
+            '.MoveFirst()
+            current_line = .Rows(0).Item("Line")
+            For j = 0 To .Rows.Count - 1
+                'Do While .EOF <> True
+                If (.Rows(j).Item("SwatFile") <> "") Then
+                    Select Case .Rows(j).Item("SwatFile")
+                        Case "*.wgn"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
+                    End Select
+
+                    TakeField.Leng = .Rows(j).Item("Leng")
+                    TakeField.LineNum = .Rows(j).Item("Lines")
+                    TakeField.Inicia = .Rows(j).Item("Inicia")
+                    value = TakeField.value()
                 Else
-                 value = .Rows(j).Item("Value")
+                    If .Rows(j).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(j).Item("Value")
+                    End If
                 End If
-            End If
-            If .Rows(j).Item("Line") = 1 Then
+                If .Rows(j).Item("Line") = 1 Then
                     altitude = convertFormat.Convert(System.Math.Abs(CDbl(Val(value))), "####0.00")
-            Else
+                Else
                     longitude = convertFormat.Convert(System.Math.Abs(CDbl(Val(value))), "####0.00")
-                temp = convertFormat.Convert(mvarnumber, "####0") & Initial.Espace1 & mvarfilewp1.PadLeft(12) & altitude & longitude & "    " & mvarfilewp1
-                p.WriteLine(temp)
-            End If
+                    temp = convertFormat.Convert(mvarnumber, "####0") & Initial.Espace1 & mvarfilewp1.PadLeft(12) & altitude & longitude & "    " & mvarfilewp1
+                    p.WriteLine(temp)
+                End If
 
-            '.MoveNext()
-        Next
-    End With
-    p.Close()
+                '.MoveNext()
+            Next
+        End With
+        p.Close()
 
-Exit Sub
+        Exit Sub
 goError:
-MsgBox(Err.Description)
+        MsgBox(Err.Description)
 
-End Sub
-Public Sub suba(ByRef field_i As Short)
-    Dim rchl, CHL As Single
-    Dim totalare As Single
-    Dim current_line, i As Integer
-    Dim e As Object
-    Dim fs As Object
-    'Dim cn As ADODB.Connection
-    Dim subarea As DataTable
-    Dim ADORecordset As DataSet
-    Dim grazing As DataTable
-    Dim TakeField As Convertion
-    Dim value, temp As String
-    Dim totalArea As Single
-    Dim pcof As Single
-    Dim rsae As Single = 0
-    Dim rsap As Single
-    Dim values() As String
-    Dim swat, apex As String
-    Dim area As Single
+    End Sub
+    Public Sub suba(ByRef field_i As Short)
+        Dim rchl, CHL As Single
+        Dim totalare As Single
+        Dim current_line, i As Integer
+        Dim e As Object
+        Dim fs As Object
+        'Dim cn As ADODB.Connection
+        Dim subarea As DataTable
+        Dim ADORecordset As DataSet
+        Dim grazing As DataTable
+        Dim TakeField As Convertion
+        Dim value, temp As String
+        Dim totalArea As Single
+        Dim pcof As Single
+        Dim rsae As Single = 0
+        Dim rsap As Single
+        Dim values() As String
+        Dim swat, apex As String
+        Dim area As Single
 
-    On Error GoTo goError
+        On Error GoTo goError
 
-    TakeField = New Convertion
-    'cn = New ADODB.Connection
-    subarea = New DataTable
-    grazing = New DataTable
+        TakeField = New Convertion
+        'cn = New ADODB.Connection
+        subarea = New DataTable
+        grazing = New DataTable
 
-    'cn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
-    'cn.Open()
+        'cn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
+        'cn.Open()
 
-    ADORecordset = getDBDataSet("SELECT * FROM Apexfiles WHERE Apexfile = 'Subarea' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
-    fs = CreateObject("Scripting.FileSystemObject")
-    e = fs.CreateTextFile(Initial.Output_files & "\" & mvarfilesub)
-    convertFormat = New Convertion
+        ADORecordset = getDBDataSet("SELECT * FROM Apexfiles WHERE Apexfile = 'Subarea' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        fs = CreateObject("Scripting.FileSystemObject")
+        e = fs.CreateTextFile(Initial.Output_files & "\" & mvarfilesub)
+        convertFormat = New Convertion
 
-    'subarea.Open("SELECT * FROM subarea ", cn, ADOR.CursorTypeEnum.adOpenDynamic, ADOR.LockTypeEnum.adLockOptimistic)
-    'subarea.AddNew()
-    swat = mvarfileName
-    apex = mvarfilesub
+        'subarea.Open("SELECT * FROM subarea ", cn, ADOR.CursorTypeEnum.adOpenDynamic, ADOR.LockTypeEnum.adLockOptimistic)
+        'subarea.AddNew()
+        swat = mvarfileName
+        apex = mvarfilesub
 
-    With ADORecordset.Tables(0)
-        current_line = .Rows(0).Item("Line")
+        With ADORecordset.Tables(0)
+            current_line = .Rows(0).Item("Line")
 
-        For i = 0 To .Rows.Count - 1
-            If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
-                Select Case .Rows(i).Item("SwatFile")
-                    Case "*.hru"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilehru)
-                    Case "*.rte"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilerte)
-                    Case "*.pnd"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilepnd)
-                    Case "*.sub"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfileName)
-                    Case "*.mgt"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilemgt)
-                    Case "*.sol"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilesol)
-                    Case "basins.bsn"
+            For i = 0 To .Rows.Count - 1
+                If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
+                    Select Case .Rows(i).Item("SwatFile")
+                        Case "*.hru"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilehru)
+                        Case "*.rte"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilerte)
+                        Case "*.pnd"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilepnd)
+                        Case "*.sub"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfileName)
+                        Case "*.mgt"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilemgt)
+                        Case "*.sol"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilesol)
+                        Case "basins.bsn"
                             TakeField.filename = Initial.Input_Files & "\" & Trim(Initial.BaseFile)
                         Case "Basins.fig"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(Initial.figsFile)
-                    Case Else
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(.Rows(i).Item("SwatFile"))
-                End Select
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(Initial.figsFile)
+                        Case Else
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(.Rows(i).Item("SwatFile"))
+                    End Select
 
-                TakeField.Leng = .Rows(i).Item("Leng")
-                TakeField.LineNum = .Rows(i).Item("Lines")
-                TakeField.Inicia = .Rows(i).Item("Inicia")
+                    TakeField.Leng = .Rows(i).Item("Leng")
+                    TakeField.LineNum = .Rows(i).Item("Lines")
+                    TakeField.Inicia = .Rows(i).Item("Inicia")
                     value = TakeField.value() '1/15/2014 Yang?
-            Else
-                If .Rows(i).Item("Value") = "Blank" Then
-                  value = " "
                 Else
-                	value = .Rows(i).Item("Value")
-                End If
-            End If
-
-            temp = .Rows(i).Item("Line") & .Rows(i).Item("Field")
-            Select Case temp
-                Case "00"
-                    totalare = Val(value)
-                Case "11"
-                    value = mvarnumber
-                Case "12"
-                    value = mvarnumber
-                Case "23"
-                    value = mvarnumber
-                Case "24"
-                    value = mvarnumber
-                Case "25"
-                    grazing = getDBDataTable("SELECT manureId, manureProduced, bioConsumed, herdsNumber, ownerID FROM grazing WHERE fileName = '" & mvarfilehru & "'")
-                    If grazing.Rows.Count > 0 Then
-                        value = grazing.Rows(0).Item("ownerID")
+                    If .Rows(i).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(i).Item("Value")
                     End If
-                    grazing.Dispose()
-                    grazing = Nothing
-                Case "28"   'commentarized because it is not needed any more. TODO I have to check for flood plain information lenght, width, and fraction.
+                End If
+
+                temp = .Rows(i).Item("Line") & .Rows(i).Item("Field")
+                Select Case temp
+                    Case "00"
+                        totalare = Val(value)
+                    Case "11"
+                        value = mvarnumber
+                    Case "12"
+                        value = mvarnumber
+                    Case "23"
+                        value = mvarnumber
+                    Case "24"
+                        value = mvarnumber
+                    Case "25"
+                        grazing = getDBDataTable("SELECT manureId, manureProduced, bioConsumed, herdsNumber, ownerID FROM grazing WHERE fileName = '" & mvarfilehru & "'")
+                        If grazing.Rows.Count > 0 Then
+                            value = grazing.Rows(0).Item("ownerID")
+                        End If
+                        grazing.Dispose()
+                        grazing = Nothing
+                    Case "28"   'commentarized because it is not needed any more. TODO I have to check for flood plain information lenght, width, and fraction.
                         If Val(value) > 0 Then value = 1
                         ' value = 0
-                Case "210"
-                    value = Initial.File_Number
+                    Case "210"
+                        value = Initial.File_Number
                     'value = Weather_Code(mvarfileName)
-                Case "414"
-                    values = Split(value, "|")
-                    value = System.Math.Round(CSng(values(0)) * totalare * 100, 4) 'calculate hru (field) fraction and convert km2 to ha.
-                    wsa1 = value
-                    area = wsa1
-                    CHL = Format(System.Math.Sqrt((area * 0.01) * 2), "0000.000")
-                    rchl = CHL * 0.9
-                Case "415"
+                    Case "414"
+                        values = Split(value, "|")
+                        value = System.Math.Round(CSng(values(0)) * totalare * 100, 4) 'calculate hru (field) fraction and convert km2 to ha.
+                        wsa1 = value
+                        area = wsa1
+                        CHL = Format(System.Math.Sqrt((area * 0.01) * 2), "0000.000")
+                        rchl = CHL * 0.9
+                    Case "415"
                     'CHL = CHL
-                Case "419"
-                    values = Split(value, "|")
-                    value = values(0)
-                    If Val(value) <= 0 Then value = "  0.0001"
+                    Case "419"
+                        values = Split(value, "|")
+                        value = values(0)
+                        If Val(value) <= 0 Then value = "  0.0001"
                         'Case "420"
                         'values = Split(value, "|")
                         'value = values(0)
                         'Case "421"
                         'values = Split(value, "|")
                         'value = values(0)
-                Case "422"
-                    value = 0.367 * Val(value) ^ 0.2967
-                Case "523"
+                    Case "422"
+                        value = 0.367 * Val(value) ^ 0.2967
+                    Case "523"
                     'rchl = rchl
-                Case "532"
-                    If Val(value) > 0 Then value = (wsa1 * 0.01) / (Val(value) * 0.001)
-                Case "634"
-                    rsae = Val(value)
-                Case "635"
-                    If rsae > 0 Then value = (Val(value) * 10000) / (rsae * 10)
-                Case "637"
-                    rsap = Val(value)
-                Case "638"
-                    If rsap > 0 Then value = (Val(value) * 10000) / (rsap * 10)
-                Case "74"
-                    pcof = Val(value)
-                Case "962"
-                    value = Val(value) / 24
-                Case "1173"
-                    grazing = getDBDataTable("SELECT manureId, manureProduced, bioConsumed, herdsNumber, ownerID FROM grazing WHERE fileName = '" & mvarfilehru & "'")
-                    If grazing.Rows.Count > 0 Then
-                        value = grazing.Rows(0).Item("herdsNumber")
-                    End If
-                    grazing.Dispose()
-                    grazing = Nothing
-            End Select
+                    Case "532"
+                        If Val(value) > 0 Then value = (wsa1 * 0.01) / (Val(value) * 0.001)
+                    Case "634"
+                        rsae = Val(value)
+                    Case "635"
+                        If rsae > 0 Then value = (Val(value) * 10000) / (rsae * 10)
+                    Case "637"
+                        rsap = Val(value)
+                    Case "638"
+                        If rsap > 0 Then value = (Val(value) * 10000) / (rsap * 10)
+                    Case "74"
+                        pcof = Val(value)
+                    Case "962"
+                        value = Val(value) / 24
+                    Case "1173"
+                        grazing = getDBDataTable("SELECT manureId, manureProduced, bioConsumed, herdsNumber, ownerID FROM grazing WHERE fileName = '" & mvarfilehru & "'")
+                        If grazing.Rows.Count > 0 Then
+                            value = grazing.Rows(0).Item("herdsNumber")
+                        End If
+                        grazing.Dispose()
+                        grazing = Nothing
+                End Select
 
-            If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
-                lenFormat = Len(.Rows(i).Item("Format"))
-                roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
-                NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
-                If IsNumeric(value) Then
-                    If temp = "414" And area > 9999 Then NumberFormat = "#####0.0"
-                    value = convertFormat.Convert(System.Math.Round(CSng(value), roundformat), NumberFormat)
-                Else
+                If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
+                    lenFormat = Len(.Rows(i).Item("Format"))
+                    roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
+                    NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
+                    If IsNumeric(value) Then
+                        If temp = "414" And area > 9999 Then NumberFormat = "#####0.0"
+                        value = convertFormat.Convert(System.Math.Round(CSng(value), roundformat), NumberFormat)
+                    Else
                         'If value.Trim = "" Then value = "0" 'Val(value) 1/15/2014
                         If Val(value) = 0.0 Then value = "0"
-                    value = convertFormat.Convert(value, NumberFormat)
+                        value = convertFormat.Convert(value, NumberFormat)
+                    End If
                 End If
-            End If
 
                 If temp <> "00" Then
 
@@ -414,20 +414,20 @@ Public Sub suba(ByRef field_i As Short)
                 End If
             Next
 
-        modifyRecords("INSERT INTO Subarea (Swat,Apex,Area,chl,rchl) VALUES('" & swat & "','" & apex & "'," & area & "," & CHL & "," & rchl & ")")
-        'subarea.Update()
-    End With
+            modifyRecords("INSERT INTO Subarea (Swat,Apex,Area,chl,rchl) VALUES('" & swat & "','" & apex & "'," & area & "," & CHL & "," & rchl & ")")
+            'subarea.Update()
+        End With
 
-    e.Close()
-    'subarea.Close()
-    'cn.Close()
+        e.Close()
+        'subarea.Close()
+        'cn.Close()
 
-  Exit Sub
+        Exit Sub
 goError:
-  MsgBox(Err.Description & " General.Suba " & temp)
+        MsgBox(Err.Description & " General.Suba " & temp)
 
- End Sub
-	
+    End Sub
+
     Public Sub Updatehru()  'OGM Check what this is doing
         Dim area As Single = 0
         Dim temp As String
@@ -494,90 +494,90 @@ goError:
         MsgBox(Err.Description & " Geenral.Updatehru")
 
     End Sub
-	
-Public Sub Soil()
-    Dim Print_levels As Single = 0
-    Dim soillevel As Single
-    Dim i, j As Integer
-    Dim Offset As Integer
-    Dim current_line As Integer
-    Dim hsg As Object
-    Dim swFile As StreamWriter
-    Dim srFile As StreamReader
-    Dim fs As Object
-    Dim ADORecordset As DataTable
-    Dim TakeField As Convertion
-    Dim value As String
-    Dim temp As String
-    Dim value1 As Single
-    Dim total_Records As Integer
-    Dim Soil_levels As Short
-    Dim tempval(10) As Object
 
-    On Error GoTo goError
+    Public Sub Soil()
+        Dim Print_levels As Single = 0
+        Dim soillevel As Single
+        Dim i, j As Integer
+        Dim Offset As Integer
+        Dim current_line As Integer
+        Dim hsg As Object
+        Dim swFile As StreamWriter
+        Dim srFile As StreamReader
+        Dim fs As Object
+        Dim ADORecordset As DataTable
+        Dim TakeField As Convertion
+        Dim value As String
+        Dim temp As String
+        Dim value1 As Single
+        Dim total_Records As Integer
+        Dim Soil_levels As Short
+        Dim tempval(10) As Object
 
-    TakeField = New Convertion
+        On Error GoTo goError
 
-    ADORecordset = New DataTable
-    ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Soil' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        TakeField = New Convertion
 
-    srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & Trim(mvarfilesol)))
-    swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & Trim(mvarfilesoi)))
-    convertFormat = New Convertion
+        ADORecordset = New DataTable
+        ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Soil' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
 
-    hsg = 0
-    With ADORecordset
-        current_line = .Rows(0).Item("Line")
-        For j = 0 To .Rows.Count - 1
-            If Not IsDBNull(.Rows(j).Item("SwatFile")) AndAlso .Rows(j).Item("SwatFile") <> "" Then
-                Select Case .Rows(j).Item("SwatFile")
-                    Case "*.sol"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilesol)
-                    Case "*.chm"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilechm)
-                End Select
+        srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & Trim(mvarfilesol)))
+        swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & Trim(mvarfilesoi)))
+        convertFormat = New Convertion
 
-                TakeField.Leng = .Rows(j).Item("Leng")
-                TakeField.LineNum = .Rows(j).Item("Lines")
-                TakeField.Inicia = .Rows(j).Item("Inicia")
-                    value = TakeField.value()
-            Else
-                If .Rows(j).Item("Value") = "Blank" Then
-                    value = " "
-                Else
-                    value = .Rows(j).Item("Value")
-                End If
-            End If
-            temp = .Rows(j).Item("Line") & .Rows(j).Item("Field")
-            Select Case temp
-                Case "00"
-                    Offset = 1
-                    For i = 1 To 9
-                        tempval(i) = Mid(value, Offset, 12)
-                        Offset = Offset + 12
-                        If tempval(i) = "" Then Exit For
-                    Next
-                    soillevel = i - 1
-                Case "21"
-                    'If Val(value) < 0.1 Then value = "    0.10"
-                Case "22"
-                    Select Case value
-                        Case "A"
-                            value = "    1.00"
-                        Case "B"
-                            value = "    2.00"
-                        Case "C"
-                            value = "    3.00"
-                        Case "D"
-                            value = "    4.00"
+        hsg = 0
+        With ADORecordset
+            current_line = .Rows(0).Item("Line")
+            For j = 0 To .Rows.Count - 1
+                If Not IsDBNull(.Rows(j).Item("SwatFile")) AndAlso .Rows(j).Item("SwatFile") <> "" Then
+                    Select Case .Rows(j).Item("SwatFile")
+                        Case "*.sol"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilesol)
+                        Case "*.chm"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilechm)
                     End Select
-                Case "31"
-                    value = convertFormat.Convert(soillevel, "####0.00")
-                    Print_levels = Val(value)
-                    If soillevel <= 2 Then value = 0
-                Case Is > "100"
-                    Soil_levels = CShort(Right(temp, 1))
-            End Select
+
+                    TakeField.Leng = .Rows(j).Item("Leng")
+                    TakeField.LineNum = .Rows(j).Item("Lines")
+                    TakeField.Inicia = .Rows(j).Item("Inicia")
+                    value = TakeField.value()
+                Else
+                    If .Rows(j).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(j).Item("Value")
+                    End If
+                End If
+                temp = .Rows(j).Item("Line") & .Rows(j).Item("Field")
+                Select Case temp
+                    Case "00"
+                        Offset = 1
+                        For i = 1 To 9
+                            tempval(i) = Mid(value, Offset, 12)
+                            Offset = Offset + 12
+                            If tempval(i) = "" Then Exit For
+                        Next
+                        soillevel = i - 1
+                    Case "21"
+                    'If Val(value) < 0.1 Then value = "    0.10"
+                    Case "22"
+                        Select Case value
+                            Case "A"
+                                value = "    1.00"
+                            Case "B"
+                                value = "    2.00"
+                            Case "C"
+                                value = "    3.00"
+                            Case "D"
+                                value = "    4.00"
+                        End Select
+                    Case "31"
+                        value = convertFormat.Convert(soillevel, "####0.00")
+                        Print_levels = Val(value)
+                        If soillevel <= 2 Then value = 0
+                    Case Is > "100"
+                        Soil_levels = CShort(Right(temp, 1))
+                End Select
 
                 If Val(temp) >= 41 And CDbl(Val(temp)) < 50 Then
                     value = convertFormat.Convert(Val(value) / 1000, "####0.00")
@@ -593,45 +593,45 @@ Public Sub Soil()
                     value = convertFormat.Convert(Val(value), "####0.00")
                 End If
 
-            If Not IsDBNull(.Rows(j).Item("Format")) AndAlso .Rows(j).Item("Format") <> "" Then
-                lenFormat = Len(.Rows(j).Item("Format"))
-                roundformat = Right(Trim(.Rows(j).Item("Format")), 1)
-                NumberFormat = Left(Trim(.Rows(j).Item("Format")), lenFormat - 2)
-                value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
-            End If
+                If Not IsDBNull(.Rows(j).Item("Format")) AndAlso .Rows(j).Item("Format") <> "" Then
+                    lenFormat = Len(.Rows(j).Item("Format"))
+                    roundformat = Right(Trim(.Rows(j).Item("Format")), 1)
+                    NumberFormat = Left(Trim(.Rows(j).Item("Format")), lenFormat - 2)
+                    value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
+                End If
 
-            If temp <> "00" Then
-                If j < .Rows.Count - 1 Then
-                    If Soil_levels > Print_levels And .Rows(j).Item("Line") > 3 Then value = "        "
-                    If Soil_levels = 0 And .Rows(j).Item("Line") > 3 Then value = "        "
+                If temp <> "00" Then
+                    If j < .Rows.Count - 1 Then
+                        If Soil_levels > Print_levels And .Rows(j).Item("Line") > 3 Then value = "        "
+                        If Soil_levels = 0 And .Rows(j).Item("Line") > 3 Then value = "        "
 
-                    If current_line = .Rows(j + 1).Item("Line") Then
-                        swFile.Write(value)
+                        If current_line = .Rows(j + 1).Item("Line") Then
+                            swFile.Write(value)
+                        Else
+                            swFile.WriteLine(value)
+                        End If
+                        current_line = .Rows(j + 1).Item("Line")
                     Else
                         swFile.WriteLine(value)
                     End If
-                    current_line = .Rows(j + 1).Item("Line")
-                Else
-                    swFile.WriteLine(value)
                 End If
-            End If
-        Next
-    End With
+            Next
+        End With
 
-    srFile.Close()
-    srFile.Dispose()
-    srFile = Nothing
+        srFile.Close()
+        srFile.Dispose()
+        srFile = Nothing
 
-    swFile.Close()
-    swFile.Dispose()
-    swFile = Nothing
+        swFile.Close()
+        swFile.Dispose()
+        swFile = Nothing
 
-    Exit Sub
+        Exit Sub
 goError:
-    MsgBox(Err.Description & " " & mvarfilesol)
+        MsgBox(Err.Description & " " & mvarfilesol)
 
-End Sub
-	
+    End Sub
+
     Public Sub Operations()
         Dim j As Integer
         Dim year2, month2, day2 As String
@@ -1001,7 +1001,7 @@ End Sub
                 pcrp = "  0"
                 pmat = Space(4)
 
-                If Initial.Version = "4.1.0" Or Initial.Version = "4.0.0" Or Initial.Version = "4.2.0" Or Initial.Version = "4.3.0" Or _
+                If Initial.Version = "4.1.0" Or Initial.Version = "4.0.0" Or Initial.Version = "4.2.0" Or Initial.Version = "4.3.0" Or
                    Initial.Version = "1.1.0" Or Initial.Version = "1.2.0" Or Initial.Version = "1.3.0" Then
                     PTrac = "    0"
                     pcrp = "    0"
@@ -1020,7 +1020,7 @@ End Sub
                 Select Case Condition
                     Case "  1" 'Planting
                         'If Initial.Version = "4.0.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" And xmtu = 7 Or xmtu = 8 Then pmat = "    0"
-                        If (Initial.Version = "4.0.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or Initial.Version = "4.3.0" Or _
+                        If (Initial.Version = "4.0.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or Initial.Version = "4.3.0" Or
                             Initial.Version = "1.1.0" Or Initial.Version = "1.2.0" Or Initial.Version = "1.3.0") _
                             And (xmtu = 7 Or xmtu = 8) Then pmat = "   50"
                         xmtu = 0
@@ -1035,7 +1035,7 @@ End Sub
                         POpv7 = convertFormat.Convert(System.Math.Round(CDbl(Val(Mid(temp, 9, 6))), 3), "###0.000")
                     Case "  2", " 10" 'irrigation
                         pcod = default_Renamed
-                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or _
+                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or
                             Initial.Version = "4.3.0" Or Initial.Version = "1.2.0" Or Initial.Version = "1.3.0" Then
                             POpv1 = convertFormat.Convert(System.Math.Round(CDbl(Val(Mid(temp, 32, 12))), 0), "#####0.0")
                         Else
@@ -1048,7 +1048,7 @@ End Sub
                         pcod = convertFormat.Convert(jx4, "##0")
                         pcrp = convertFormat.Convert(temp1, "##0")
                         pmat = convertFormat.Convert(lyr, "###0")
-                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "3.1.0" Or Initial.Version = "4.1.0" Or _
+                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "3.1.0" Or Initial.Version = "4.1.0" Or
                             Initial.Version = "4.2.0" Or Initial.Version = "4.3.0" Or Initial.Version = "1.2.0" Or Initial.Version = "1.3.0" Then
                             POpv1 = convertFormat.Convert(System.Math.Round(CDbl(Val(Mid(temp, 32, 12))), 0), "#####0.0")
                         Else
@@ -1211,7 +1211,7 @@ End Sub
                         pcod = convertFormat.Convert(jx4, "##0")
                         pcrp = convertFormat.Convert(temp1, "##0")
                         pmat = convertFormat.Convert(lyr, "###0")
-                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or _
+                        If Initial.Version = "2.1.0" Or Initial.Version = "2.3.0" Or Initial.Version = "1.1.0" Or Initial.Version = "4.1.0" Or Initial.Version = "4.2.0" Or
                             Initial.Version = "4.3.0" Or Initial.Version = "1.2.0" Or Initial.Version = "1.3.0" Then
                             POpv1 = convertFormat.Convert(System.Math.Round(CDbl(Val(Mid(temp, 32, 12))), 0), "#####0.0") '1/15/2014 Yang
                         Else
@@ -1315,103 +1315,103 @@ goError:
         MsgBox(Err.Description & " File = " & Trim(mvarfilemgt))
 
     End Sub
-	
-Sub printHerd(ByRef animals As Single, ByRef manureID As Single, ByRef bioConsumed As Single, ByRef manureProduced As Single, ByRef o As Short)
-'OGM CHECK LATER
-    Dim swFile As StreamWriter
+
+    Sub printHerd(ByRef animals As Single, ByRef manureID As Single, ByRef bioConsumed As Single, ByRef manureProduced As Single, ByRef o As Short)
+        'OGM CHECK LATER
+        Dim swFile As StreamWriter
 
         swFile = New StreamWriter(File.Open(Initial.Output_files & "\" & Initial.herd, FileMode.Append))
         convertFormat = New Convertion
 
-    swFile.Write(convertFormat.Convert(o, "###0"))
-    swFile.Write(convertFormat.Convert(animals, "####0.00"))
-    swFile.Write(convertFormat.Convert(manureID, "####0.00"))
-    swFile.Write(convertFormat.Convert(0, "####0.00"))
-    swFile.Write(convertFormat.Convert(bioConsumed, "####0.00"))
-    swFile.Write(convertFormat.Convert(manureProduced, "####0.00"))
-    swFile.WriteLine(convertFormat.Convert(0, "####0.00"))
-    swFile.Close()
-    swFile.Dispose()
-End Sub
-Public Sub Site()
-    Dim sitpos As Object
-    Dim totalare As Single
-    Dim temp As Object
-    Dim current_line As Integer
-    Dim swFile As StreamWriter
-    Dim srFile As StreamReader
-    Dim ADORecordset As DataTable
-    Dim TakeField As Convertion
-    Dim i As Integer
+        swFile.Write(convertFormat.Convert(o, "###0"))
+        swFile.Write(convertFormat.Convert(animals, "####0.00"))
+        swFile.Write(convertFormat.Convert(manureID, "####0.00"))
+        swFile.Write(convertFormat.Convert(0, "####0.00"))
+        swFile.Write(convertFormat.Convert(bioConsumed, "####0.00"))
+        swFile.Write(convertFormat.Convert(manureProduced, "####0.00"))
+        swFile.WriteLine(convertFormat.Convert(0, "####0.00"))
+        swFile.Close()
+        swFile.Dispose()
+    End Sub
+    Public Sub Site()
+        Dim sitpos As Object
+        Dim totalare As Single
+        Dim temp As Object
+        Dim current_line As Integer
+        Dim swFile As StreamWriter
+        Dim srFile As StreamReader
+        Dim ADORecordset As DataTable
+        Dim TakeField As Convertion
+        Dim i As Integer
 
-    On Error GoTo goError
+        On Error GoTo goError
 
-    TakeField = New Convertion
-    ADORecordset = New DataTable
-    ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Site' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        TakeField = New Convertion
+        ADORecordset = New DataTable
+        ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Site' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
 
-    srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & mvarfilesub))
-    swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & mvarfilesit))
-    convertFormat = New Convertion
+        srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & mvarfilesub))
+        swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & mvarfilesit))
+        convertFormat = New Convertion
 
-    With ADORecordset
-        current_line = .Rows(0).Item("Line")
-        For i = 0 To .Rows.Count - 1
-            If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
-                Select Case .Rows(i).Item("SwatFile")
-                    Case "*.sub"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfileName)
-                    Case "*.hru"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilehru)
-                    Case "basins.bsn"
-                        TakeField.filename = Initial.Input_Files & "\" & "basins.bsn"
-                    Case "*.wgn"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
+        With ADORecordset
+            current_line = .Rows(0).Item("Line")
+            For i = 0 To .Rows.Count - 1
+                If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
+                    Select Case .Rows(i).Item("SwatFile")
+                        Case "*.sub"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfileName)
+                        Case "*.hru"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilehru)
+                        Case "basins.bsn"
+                            TakeField.filename = Initial.Input_Files & "\" & "basins.bsn"
+                        Case "*.wgn"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
+                    End Select
+
+                    TakeField.Leng = .Rows(i).Item("Leng")
+                    TakeField.LineNum = .Rows(i).Item("Lines")
+                    TakeField.Inicia = .Rows(i).Item("Inicia")
+                    value = TakeField.value()
+                Else
+                    If .Rows(i).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(i).Item("Value")
+                    End If
+                End If
+
+                temp = .Rows(i).Item("Line") & .Rows(i).Item("Field")
+
+                Select Case temp
+                    Case "00"
+                        totalare = Val(value)
                 End Select
 
-                TakeField.Leng = .Rows(i).Item("Leng")
-                TakeField.LineNum = .Rows(i).Item("Lines")
-                TakeField.Inicia = .Rows(i).Item("Inicia")
-                value = TakeField.value()
-            Else
-                If .Rows(i).Item("Value") = "Blank" Then
-                    value = " "
-                Else
-                    value = .Rows(i).Item("Value")
+                If .Rows(i).Item("Field") = 5 Then
+                    value = convertFormat.Convert(System.Math.Round(Val(value), 2), "####0.00")
                 End If
-            End If
 
-            temp = .rows(i).Item("Line") & .rows(i).Item("Field")
+                If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
+                    lenFormat = Len(.Rows(i).Item("Format"))
+                    roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
+                    NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
+                    value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
+                End If
 
-            Select Case temp
-                Case "00"
-                    totalare = Val(value)
-            End Select
-
-            If .rows(i).Item("Field") = 5 Then
-                value = convertFormat.Convert(System.Math.Round(Val(value), 2), "####0.00")
-            End If
-
-            If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
-                lenFormat = Len(.Rows(i).Item("Format"))
-                roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
-                NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
-                value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
-            End If
-
-            If temp <> "00" Then
-                If i < .Rows.Count - 1 Then
-                    If current_line = .Rows(i + 1).Item("Line") Then
-                        swFile.Write(value)
-                    Else
-                        swFile.WriteLine(value)
+                If temp <> "00" Then
+                    If i < .Rows.Count - 1 Then
+                        If current_line = .Rows(i + 1).Item("Line") Then
+                            swFile.Write(value)
+                        Else
+                            swFile.WriteLine(value)
+                        End If
+                        current_line = .Rows(i + 1).Item("Line")
                     End If
+                Else
                     current_line = .Rows(i + 1).Item("Line")
                 End If
-            Else
-                current_line = .Rows(i + 1).Item("Line")
-            End If
-        Next
+            Next
 
             If Initial.Version <> "4.0.0" And Initial.Version <> "4.1.0" And Initial.Version <> "4.2.0" And Initial.Version <> "4.3.0" And Initial.Version <> "1.1.0" And Initial.Version <> "1.2.0" And Initial.Version <> "1.3.0" Then
                 sitpos = InStr(1, mvarfilesit, ".")
@@ -1426,104 +1426,104 @@ Public Sub Site()
                 swFile.WriteLine(value)
                 swFile.WriteLine(value)
             End If
-    End With
+        End With
 
-    srFile.Close()
-    srFile.Dispose()
-    srFile = Nothing
+        srFile.Close()
+        srFile.Dispose()
+        srFile = Nothing
 
-    swFile.Close()
-    swFile.Dispose()
-    swFile = Nothing
+        swFile.Close()
+        swFile.Dispose()
+        swFile = Nothing
 
-    Exit Sub
+        Exit Sub
 goError:
-    MsgBox(Err.Description)
+        MsgBox(Err.Description)
 
-End Sub
-	
-Public Sub Weather()
-Dim bis As Object
-Dim tmp1 As Object
-Dim j, i As Integer
-Dim c As Object = Nothing
-Dim b As Object = Nothing
-Dim a As Object = Nothing
-Dim fs As Object = Nothing
-'Dim adoConnection As ADODB.Connection
-Dim ADORecordset As DataTable
-Dim year1, k, day_Renamed As Object
-Dim month_Renamed As Short
-Dim tmp As Object
-Dim pcp As String
-Dim Months, monthj As Object
-Dim daya As Object
+    End Sub
 
-    On Error GoTo goError
+    Public Sub Weather()
+        Dim bis As Object
+        Dim tmp1 As Object
+        Dim j, i As Integer
+        Dim c As Object = Nothing
+        Dim b As Object = Nothing
+        Dim a As Object = Nothing
+        Dim fs As Object = Nothing
+        'Dim adoConnection As ADODB.Connection
+        Dim ADORecordset As DataTable
+        Dim year1, k, day_Renamed As Object
+        Dim month_Renamed As Short
+        Dim tmp As Object
+        Dim pcp As String
+        Dim Months, monthj As Object
+        Dim daya As Object
 
-    ADORecordset = New DataTable
-    'adoConnection = New ADODB.Connection
-    'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
-    'adoConnection.Open()
-    convertFormat = New Convertion
+        On Error GoTo goError
 
-    ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Weather' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
-    fs = CreateObject("Scripting.FileSystemObject")
+        ADORecordset = New DataTable
+        'adoConnection = New ADODB.Connection
+        'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
+        'adoConnection.Open()
+        convertFormat = New Convertion
 
-    a = fs.OpenTextFile(Initial.Input_Files & "\" & Trim(Initial.prpfiles(1)))
-    If Initial.ngn > 1 Then b = fs.OpenTextFile(Initial.Input_Files & "\" & Trim(Initial.temfiles(1)))
+        ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Weather' AND version=" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        fs = CreateObject("Scripting.FileSystemObject")
 
-    c = fs.CreateTextFile(Initial.Output_files & "\" & mvarfilewht)
-    Months = New Object() {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365}
-    monthj = New Object() {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
+        a = fs.OpenTextFile(Initial.Input_Files & "\" & Trim(Initial.prpfiles(1)))
+        If Initial.ngn > 1 Then b = fs.OpenTextFile(Initial.Input_Files & "\" & Trim(Initial.temfiles(1)))
 
-    With ADORecordset
-    '.MoveFirst()
-        For i = 0 To .Rows.Count - 1
-        'Do While .EOF <> True
-            If (.rows(i).item("SwatFile") <> "") Then
-                Select Case .Rows(i).item("SwatFile")
-                    Case "*.sub"
-                    convertFormat.filename = Initial.Input_Files & "\" & mvarfileName
-                End Select
-                convertFormat.Leng = .rows(i).item("Leng")
-                convertFormat.LineNum = .rows(i).item("Lines")
-                convertFormat.Inicia = .rows(i).item("Inicia")
-                value = convertFormat.value()
-            Else
-                If .rows(i).item("Value") = "Blank" Then
-                    value = " "
+        c = fs.CreateTextFile(Initial.Output_files & "\" & mvarfilewht)
+        Months = New Object() {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365}
+        monthj = New Object() {0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
+
+        With ADORecordset
+            '.MoveFirst()
+            For i = 0 To .Rows.Count - 1
+                'Do While .EOF <> True
+                If (.Rows(i).Item("SwatFile") <> "") Then
+                    Select Case .Rows(i).Item("SwatFile")
+                        Case "*.sub"
+                            convertFormat.filename = Initial.Input_Files & "\" & mvarfileName
+                    End Select
+                    convertFormat.Leng = .Rows(i).Item("Leng")
+                    convertFormat.LineNum = .Rows(i).Item("Lines")
+                    convertFormat.Inicia = .Rows(i).Item("Inicia")
+                    value = convertFormat.value()
                 Else
-                    value = .rows(i).item("Value")
+                    If .Rows(i).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(i).Item("Value")
+                    End If
                 End If
-            End If
-            If Not IsDBNull(.rows(i).item("Format")) AndAlso .rows(i).item("Format") <> "" Then
-                lenFormat = Len(.Rows(i).item("Format"))
-                roundformat = Right(Trim(.Rows(i).item("Format")), 1)
-                NumberFormat = Left(Trim(.Rows(i).item("Format")), lenFormat - 2)
-                value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
-            End If
+                If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
+                    lenFormat = Len(.Rows(i).Item("Format"))
+                    roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
+                    NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
+                    value = convertFormat.Convert(System.Math.Round(Val(value), roundformat), NumberFormat)
+                End If
 
-            Select Case .Rows(i).item("Line")
-                Case 98
-                    Last = value
-                Case 99
-                    Lasttmp = value
-            End Select
-            '.MoveNext()
-        Next
-    End With
+                Select Case .Rows(i).Item("Line")
+                    Case 98
+                        Last = value
+                    Case 99
+                        Lasttmp = value
+                End Select
+                '.MoveNext()
+            Next
+        End With
 
-    a.ReadLine()
-    a.ReadLine()
-    a.ReadLine()
-    a.ReadLine()
-    If Initial.ngn > 1 Then
-        b.ReadLine()
-        b.ReadLine()
-        b.ReadLine()
-        b.ReadLine()
-    End If
+        a.ReadLine()
+        a.ReadLine()
+        a.ReadLine()
+        a.ReadLine()
+        If Initial.ngn > 1 Then
+            b.ReadLine()
+            b.ReadLine()
+            b.ReadLine()
+            b.ReadLine()
+        End If
 
         Do While Val(Last) > Val(Variables.pcpgages)
             Last = Last - Variables.pcpgages
@@ -1535,59 +1535,59 @@ Dim daya As Object
         Loop
 
         j = 10 * (Lasttmp - 1) + 8
-    If j <= 0 Then j = 1
-    Do While a.atEndOfStream <> True
-        If Initial.ngn > 1 Then
-            tmp = b.ReadLine
-        Else
-            tmp = "000000000"
-        End If
-        tmp1 = a.ReadLine
-        year1 = Left(tmp1, 4)
-        daya = Mid(tmp1, 5, 3)
+        If j <= 0 Then j = 1
+        Do While a.atEndOfStream <> True
+            If Initial.ngn > 1 Then
+                tmp = b.ReadLine
+            Else
+                tmp = "000000000"
+            End If
+            tmp1 = a.ReadLine
+            year1 = Left(tmp1, 4)
+            daya = Mid(tmp1, 5, 3)
             day_Renamed = Int(CDbl(Val(daya)))
-        bis = year1 Mod 4
+            bis = year1 Mod 4
 
-        If (bis <> 0) Then
-            For k = 1 To 12
-                If (day_Renamed <= Months(k)) Then
-                    month_Renamed = k
-                    If (k > 1) Then
-                        day_Renamed = day_Renamed - Months(k - 1)
+            If (bis <> 0) Then
+                For k = 1 To 12
+                    If (day_Renamed <= Months(k)) Then
+                        month_Renamed = k
+                        If (k > 1) Then
+                            day_Renamed = day_Renamed - Months(k - 1)
+                        End If
+                        Exit For
                     End If
-                    Exit For
-                End If
-            Next
-        Else
-            For k = 1 To 12
-                If (day_Renamed <= monthj(k)) Then
-                    month_Renamed = k
-                    If (k > 1) Then
-                        day_Renamed = day_Renamed - monthj(k - 1)
+                Next
+            Else
+                For k = 1 To 12
+                    If (day_Renamed <= monthj(k)) Then
+                        month_Renamed = k
+                        If (k > 1) Then
+                            day_Renamed = day_Renamed - monthj(k - 1)
+                        End If
+                        Exit For
                     End If
-                    Exit For
-                End If
-            Next
-        End If
-        c.Write("  ")
-        c.Write(year1)
-        c.Write(convertFormat.Convert(month_Renamed, "###0"))
-        c.Write(convertFormat.Convert(day_Renamed, "###0"))
-        c.Write("     0")
-        c.Write(convertFormat.Convert(Mid(tmp, j, 5), "##0.00"))
-        c.Write(convertFormat.Convert(Mid(tmp, j + 5, 5), "##0.00"))
-        c.WriteLine(convertFormat.Convert(Mid(tmp1, i, 5), "##0.00"))
-    Loop
+                Next
+            End If
+            c.Write("  ")
+            c.Write(year1)
+            c.Write(convertFormat.Convert(month_Renamed, "###0"))
+            c.Write(convertFormat.Convert(day_Renamed, "###0"))
+            c.Write("     0")
+            c.Write(convertFormat.Convert(Mid(tmp, j, 5), "##0.00"))
+            c.Write(convertFormat.Convert(Mid(tmp, j + 5, 5), "##0.00"))
+            c.WriteLine(convertFormat.Convert(Mid(tmp1, i, 5), "##0.00"))
+        Loop
 
-    a.Close()
-    If Initial.ngn > 0 Then b.Close()
-    c.Close()
-    Exit Sub
+        a.Close()
+        If Initial.ngn > 0 Then b.Close()
+        c.Close()
+        Exit Sub
 goError:
-    MsgBox(Err.Description)
+        MsgBox(Err.Description)
 
     End Sub
-	
+
     Public Sub Weather1()
         Dim bis As Object
         Dim e As Object = Nothing
@@ -1799,255 +1799,255 @@ goError:
             End If
         End Try
     End Sub
-Function lookatparm(ByRef oper As String) As String
+    Function lookatparm(ByRef oper As String) As String
 
-'Dim adoConnection As ADODB.Connection
-Dim ADORecordset As DataTable
+        'Dim adoConnection As ADODB.Connection
+        Dim ADORecordset As DataTable
 
-    On Error GoTo goError
+        On Error GoTo goError
 
-    'adoConnection = New ADODB.Connection
-    'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
-    'adoConnection.Open()
+        'adoConnection = New ADODB.Connection
+        'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
+        'adoConnection.Open()
 
-    ADORecordset = getDBDataTable("SELECT * FROM Parmopc where code = " & oper)
-    'ADORecordset.MoveFirst()
-    If ADORecordset.Rows.Count = 0 Then
-    lookatparm = "    "
-    Else
-    lookatparm = convertFormat.Convert(ADORecordset.Rows(0).Item("Field"), "###0")
-    End If
-
-    ADORecordset.Dispose()
-    ADORecordset = Nothing
-
-Exit Function
-goError:
-MsgBox(Err.Description)
-
-End Function
-	
-Function lookatfile(ByRef id As String, ByRef oper As String) As String
-
-'Dim adoConnection As ADODB.Connection
-Dim ADORecordset As DataTable
-Dim adoRecordSet1 As DataTable
-
-    On Error GoTo goError
-
-    'adoConnection = New ADODB.Connection
-    'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
-    '		adoConnection.Open()
-
-    ADORecordset = getDBDataTable("SELECT * FROM Parmopc where code = " & oper)
-    'ADORecordset.MoveFirst()
-    adoRecordSet1 = getDBDataTable("SELECT * FROM " & ADORecordset.Rows(0).Item("Line") & " where swat_code = " & id)
-    If adoRecordSet1.Rows.Count = 0 Then
-        lookatfile = "    "
-    Else
-        lookatfile = convertFormat.Convert(adoRecordSet1.Rows(0).Item("Line"), "###0")
-    End If
-
-    ADORecordset.Dispose()
-    adoRecordSet1.Dispose()
-    ADORecordset = Nothing
-    adoRecordSet1 = Nothing
-Exit Function
-goError:
-MsgBox(Err.Description)
-End Function
-Public Sub Swat()
-Dim temp As Object
-Dim Temp2 As Object
-Dim temp1 As Object
-Dim d As Object
-Dim c As Object
-Dim filenm As Object
-Dim File1 As Object
-Dim b As Object
-Dim fs As Object
-'Dim adoConnection As ADODB.Connection
-Dim ADORecordset As DataTable
-Dim filenum(2) As Object
-Dim swatf() As String
-Dim foundit As Object
-Dim flag As Boolean
-Dim i, j As Short
-
-    On Error GoTo goError
-    'adoConnection = New ADODB.Connection
-    'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Initial.Dir1 & "\Project_Parameters.mdb"
-    'adoConnection.Open()
-    convertFormat = New Convertion
-
-    ADORecordset = New DataTable
-    ADORecordset = getDBDataTable("Output_Swt")
-
-    fs = CreateObject("Scripting.FileSystemObject")
-    b = fs.OpenTextFile(mvarfilewht & "\" & mvarfileName)
-    b.ReadLine()
-    b.ReadLine()
-    b.ReadLine()
-    b.ReadLine()
-    b.ReadLine()
-    value = b.ReadLine
-    b.Close()
-    filenum(1) = Mid(value, 13, 1)
-    filenum(2) = Mid(value, 14, 1)
-
-    If filenum(1) = "0" Then
-        File1 = " " & " " & filenum(2) & "P"
-    Else
-        File1 = " " & filenum(1) & filenum(2) & "P"
-    End If
-
-    foundit = False
-
-    For j = 0 To ADORecordset.Rows.Count - 1
-    'Do While ADORecordset.EOF <> True
-        If File1 = ADORecordset.Rows(j).Item(0).Value Then
-            foundit = True
-            Exit For
+        ADORecordset = getDBDataTable("SELECT * FROM Parmopc where code = " & oper)
+        'ADORecordset.MoveFirst()
+        If ADORecordset.Rows.Count = 0 Then
+            lookatparm = "    "
         Else
-            foundit = False
+            lookatparm = convertFormat.Convert(ADORecordset.Rows(0).Item("Field"), "###0")
         End If
-        'ADORecordset.MoveNext()
-    Next
 
-    i = i + 1
-    filenm = File1 & ".dat"
+        ADORecordset.Dispose()
+        ADORecordset = Nothing
 
-    If foundit = True Then
+        Exit Function
+goError:
+        MsgBox(Err.Description)
+
+    End Function
+
+    Function lookatfile(ByRef id As String, ByRef oper As String) As String
+
+        'Dim adoConnection As ADODB.Connection
+        Dim ADORecordset As DataTable
+        Dim adoRecordSet1 As DataTable
+
+        On Error GoTo goError
+
+        'adoConnection = New ADODB.Connection
+        'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source = " & Initial.Dir1 & "\Project_Parameters.mdb"
+        '		adoConnection.Open()
+
+        ADORecordset = getDBDataTable("SELECT * FROM Parmopc where code = " & oper)
+        'ADORecordset.MoveFirst()
+        adoRecordSet1 = getDBDataTable("SELECT * FROM " & ADORecordset.Rows(0).Item("Line") & " where swat_code = " & id)
+        If adoRecordSet1.Rows.Count = 0 Then
+            lookatfile = "    "
+        Else
+            lookatfile = convertFormat.Convert(adoRecordSet1.Rows(0).Item("Line"), "###0")
+        End If
+
+        ADORecordset.Dispose()
+        adoRecordSet1.Dispose()
+        ADORecordset = Nothing
+        adoRecordSet1 = Nothing
+        Exit Function
+goError:
+        MsgBox(Err.Description)
+    End Function
+    Public Sub Swat()
+        Dim temp As Object
+        Dim Temp2 As Object
+        Dim temp1 As Object
+        Dim d As Object
+        Dim c As Object
+        Dim filenm As Object
+        Dim File1 As Object
+        Dim b As Object
+        Dim fs As Object
+        'Dim adoConnection As ADODB.Connection
+        Dim ADORecordset As DataTable
+        Dim filenum(2) As Object
+        Dim swatf() As String
+        Dim foundit As Object
+        Dim flag As Boolean
+        Dim i, j As Short
+
+        On Error GoTo goError
+        'adoConnection = New ADODB.Connection
+        'adoConnection.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Initial.Dir1 & "\Project_Parameters.mdb"
+        'adoConnection.Open()
+        convertFormat = New Convertion
+
+        ADORecordset = New DataTable
+        ADORecordset = getDBDataTable("Output_Swt")
+
+        fs = CreateObject("Scripting.FileSystemObject")
         b = fs.OpenTextFile(mvarfilewht & "\" & mvarfileName)
-        c = fs.OpenTextFile(mvarfilewht & "\" & File1)
-        d = fs.CreateTextFile(mvarfilewht & "\" & "temp")
+        b.ReadLine()
+        b.ReadLine()
+        b.ReadLine()
+        b.ReadLine()
+        b.ReadLine()
+        value = b.ReadLine
+        b.Close()
+        filenum(1) = Mid(value, 13, 1)
+        filenum(2) = Mid(value, 14, 1)
 
-        For i = 1 To 6
-            d.WriteLine(c.ReadLine)
+        If filenum(1) = "0" Then
+            File1 = " " & " " & filenum(2) & "P"
+        Else
+            File1 = " " & filenum(1) & filenum(2) & "P"
+        End If
+
+        foundit = False
+
+        For j = 0 To ADORecordset.Rows.Count - 1
+            'Do While ADORecordset.EOF <> True
+            If File1 = ADORecordset.Rows(j).Item(0).Value Then
+                foundit = True
+                Exit For
+            Else
+                foundit = False
+            End If
+            'ADORecordset.MoveNext()
         Next
 
-        For i = 1 To 9
-            b.ReadLine()
-        Next
+        i = i + 1
+        filenm = File1 & ".dat"
 
-        Do While c.atEndOfStream <> True Or b.atEndOfStream <> True
-            temp1 = b.ReadLine
-            Temp2 = c.ReadLine
-            d.Write(Mid(Temp2, 1, 10))
-            For i = 11 To 95 Step 17
-                d.Write(convertFormat.Convert(Val(Mid(temp1, i, 17)) + Val(Mid(Temp2, i, 17)), " 0.0000000000E+00"))
+        If foundit = True Then
+            b = fs.OpenTextFile(mvarfilewht & "\" & mvarfileName)
+            c = fs.OpenTextFile(mvarfilewht & "\" & File1)
+            d = fs.CreateTextFile(mvarfilewht & "\" & "temp")
+
+            For i = 1 To 6
+                d.WriteLine(c.ReadLine)
             Next
-            d.WriteLine(convertFormat.Convert(Val(Mid(temp1, 96, 17)) + Val(Mid(Temp2, 96, 17)), " 0.0000000000E+00"))
-        Loop
+
+            For i = 1 To 9
+                b.ReadLine()
+            Next
+
+            Do While c.atEndOfStream <> True Or b.atEndOfStream <> True
+                temp1 = b.ReadLine
+                Temp2 = c.ReadLine
+                d.Write(Mid(Temp2, 1, 10))
+                For i = 11 To 95 Step 17
+                    d.Write(convertFormat.Convert(Val(Mid(temp1, i, 17)) + Val(Mid(Temp2, i, 17)), " 0.0000000000E+00"))
+                Next
+                d.WriteLine(convertFormat.Convert(Val(Mid(temp1, 96, 17)) + Val(Mid(Temp2, 96, 17)), " 0.0000000000E+00"))
+            Loop
+            b.Close()
+            c.Close()
+            d.Close()
+            c = fs.CreateTextFile(mvarfilewht & "\" & File1)
+            d = fs.OpenTextFile(mvarfilewht & "\" & "temp")
+            Do While d.atEndOfStream <> True
+                c.WriteLine(d.ReadLine)
+            Loop
+        Else
+            modifyRecords("INSERT INTO Output_Swt (Name) VALUES('" & File1 & "')")
+            'ADORecordset.AddNew()
+            'ADORecordset.Fields(0).Value = File1
+            'ADORecordset.Update()
+            b = fs.OpenTextFile(mvarfilewht & "\" & mvarfileName)
+            c = fs.CreateTextFile(mvarfilewht & "\" & File1)
+            c.WriteLine(b.ReadLine) 'line 1
+            c.WriteLine(b.ReadLine) 'line 2
+            c.WriteLine(b.ReadLine) 'line 3
+            b.ReadLine()
+            b.ReadLine()
+            c.WriteLine(b.ReadLine) ' line 4
+            b.ReadLine()
+            c.WriteLine(b.ReadLine) ' line 5
+            c.WriteLine(b.ReadLine) ' line 6
+            temp = Mid(b.ReadLine, 10, 103)
+            c.WriteLine("   0    0" & temp) ' line 7
+            Do While b.atEndOfStream <> True
+                c.WriteLine(b.ReadLine) ' others lines
+            Loop
+        End If
+
         b.Close()
         c.Close()
-        d.Close()
-        c = fs.CreateTextFile(mvarfilewht & "\" & File1)
-        d = fs.OpenTextFile(mvarfilewht & "\" & "temp")
-        Do While d.atEndOfStream <> True
-            c.WriteLine(d.ReadLine)
-        Loop
-    Else
-        modifyRecords("INSERT INTO Output_Swt (Name) VALUES('" & File1 & "')")
-        'ADORecordset.AddNew()
-        'ADORecordset.Fields(0).Value = File1
-        'ADORecordset.Update()
-        b = fs.OpenTextFile(mvarfilewht & "\" & mvarfileName)
-        c = fs.CreateTextFile(mvarfilewht & "\" & File1)
-        c.WriteLine(b.ReadLine) 'line 1
-        c.WriteLine(b.ReadLine) 'line 2
-        c.WriteLine(b.ReadLine) 'line 3
-        b.ReadLine()
-        b.ReadLine()
-        c.WriteLine(b.ReadLine) ' line 4
-        b.ReadLine()
-        c.WriteLine(b.ReadLine) ' line 5
-        c.WriteLine(b.ReadLine) ' line 6
-        temp = Mid(b.ReadLine, 10, 103)
-        c.WriteLine("   0    0" & temp) ' line 7
-        Do While b.atEndOfStream <> True
-            c.WriteLine(b.ReadLine) ' others lines
-        Loop
-    End If
-
-    b.Close()
-    c.Close()
-Exit Sub
+        Exit Sub
 goError:
-MsgBox(Err.Description)
+        MsgBox(Err.Description)
 
-End Sub
-	
-Public Sub wmpfiles()
-    Dim current_line As Integer
-    Dim swFile As StreamWriter
-    Dim srFile As StreamReader
-    Dim ADORecordset As DataTable
-    Dim TakeField As Convertion
-    Dim i As Integer
+    End Sub
 
-    On Error GoTo goError
-    ADORecordset = New DataTable
-    TakeField = New Convertion
+    Public Sub wmpfiles()
+        Dim current_line As Integer
+        Dim swFile As StreamWriter
+        Dim srFile As StreamReader
+        Dim ADORecordset As DataTable
+        Dim TakeField As Convertion
+        Dim i As Integer
 
-    ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Wpmfiles' AND version =" & "'" & Initial.Version & "'" & " ORDER BY line, field")
-    srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & Trim(mvarfilewgn)))
-    swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & Trim(mvarfilewp1)))
-    convertFormat = New Convertion
+        On Error GoTo goError
+        ADORecordset = New DataTable
+        TakeField = New Convertion
 
-    With ADORecordset
-        current_line = .Rows(0).Item("Line")
-        For i = 0 To .Rows.Count - 1
-            If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
-                Select Case .Rows(i).Item("SwatFile")
-                    Case "*.wgn"
-                        TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
-                End Select
-                TakeField.Leng = .Rows(i).Item("Leng")
-                TakeField.LineNum = .Rows(i).Item("Lines")
-                TakeField.Inicia = .Rows(i).Item("Inicia")
-                value = TakeField.value()
-            Else
-                If .Rows(i).Item("Value") = "Blank" Then
-                    value = " "
+        ADORecordset = getDBDataTable("SELECT * FROM Apexfiles WHERE Apexfile = 'Wpmfiles' AND version =" & "'" & Initial.Version & "'" & " ORDER BY line, field")
+        srFile = New StreamReader(File.OpenRead(Initial.Input_Files & "\" & Trim(mvarfilewgn)))
+        swFile = New StreamWriter(File.Create(Initial.Output_files & "\" & Trim(mvarfilewp1)))
+        convertFormat = New Convertion
+
+        With ADORecordset
+            current_line = .Rows(0).Item("Line")
+            For i = 0 To .Rows.Count - 1
+                If Not IsDBNull(.Rows(i).Item("SwatFile")) AndAlso .Rows(i).Item("SwatFile") <> "" Then
+                    Select Case .Rows(i).Item("SwatFile")
+                        Case "*.wgn"
+                            TakeField.filename = Initial.Input_Files & "\" & Trim(mvarfilewgn)
+                    End Select
+                    TakeField.Leng = .Rows(i).Item("Leng")
+                    TakeField.LineNum = .Rows(i).Item("Lines")
+                    TakeField.Inicia = .Rows(i).Item("Inicia")
+                    value = TakeField.value()
                 Else
-                    value = .Rows(i).Item("Value")
+                    If .Rows(i).Item("Value") = "Blank" Then
+                        value = " "
+                    Else
+                        value = .Rows(i).Item("Value")
+                    End If
                 End If
-            End If
 
-            If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
-                lenFormat = Len(.Rows(i).Item("Format"))
-                roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
-                NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
-                value = convertFormat.Convert(System.Math.Round(CSng(value), roundformat), NumberFormat)
-            End If
+                If Not IsDBNull(.Rows(i).Item("Format")) AndAlso .Rows(i).Item("Format") <> "" Then
+                    lenFormat = Len(.Rows(i).Item("Format"))
+                    roundformat = Right(Trim(.Rows(i).Item("Format")), 1)
+                    NumberFormat = Left(Trim(.Rows(i).Item("Format")), lenFormat - 2)
+                    value = convertFormat.Convert(System.Math.Round(CSng(value), roundformat), NumberFormat)
+                End If
 
-            If i < .Rows.Count - 1 Then
-                If current_line = .Rows(i + 1).Item("Line") Then
-                    swFile.Write(value)
+                If i < .Rows.Count - 1 Then
+                    If current_line = .Rows(i + 1).Item("Line") Then
+                        swFile.Write(value)
+                    Else
+                        swFile.WriteLine(value)
+                    End If
+                    current_line = .Rows(i + 1).Item("Line")
                 Else
                     swFile.WriteLine(value)
                 End If
-                current_line = .Rows(i + 1).Item("Line")
-            Else
-                swFile.WriteLine(value)
-            End If
-        Next
-    End With
+            Next
+        End With
 
-    srFile.Close()
-    srFile.Dispose()
-    srFile = Nothing
+        srFile.Close()
+        srFile.Dispose()
+        srFile = Nothing
 
-    swFile.Close()
-    swFile.Dispose()
-    swFile = Nothing
+        swFile.Close()
+        swFile.Dispose()
+        swFile = Nothing
 
-    Exit Sub
+        Exit Sub
 goError:
-    MsgBox(Err.Description)
-End Sub
-	
+        MsgBox(Err.Description)
+    End Sub
+
     Public Sub SWATSubbasins(ByRef SubbasinNum As String, rotation As Integer, myConnection As OleDb.OleDbConnection)
         Dim tillName, cropName As String
         Dim Pmat1 As Object
@@ -2396,21 +2396,21 @@ End Sub
                     ReDim Preserve sSql(i)
                     If mvarnumber > 0 Then lat1 = Initial.lat1(mvarnumber - 1) : lon1 = Initial.lon1(mvarnumber - 1) Else lat1 = "" : lon1 = ""
 
-                    sSql(i) = "INSERT INTO FEM (Composite,[Applies To],[year],[month],[day],[APEX Operation Code],operation,[Apex Crop Code]," & _
-                        "Crop,[Year in rotation],[Rotation Length],frequency,item1,value1,item2,value2,item3,value3,item4,value4,item5,value5" & _
-                        ",item6,value6,item7,value7,item8,value8,item9,value9) VALUES('" & _
-                        Initial.Scenario & " " & mvarfilemgt & "_" & SubbasinNum & "','" & _
-                        FEMScenario & "'," & year_Renamed & "," & month1 & "," & day1 & ",'" & _
-                        pcod & "','" & getData("SELECT description FROM S_A_TILL WHERE APEX_code = " & Val(pcod), myConnection) & "','" & Val(Temp2) & "','" & getData("SELECT description FROM S_A_CROP WHERE APEX_code = " & Val(pcrp), myConnection) & "'," & _
-                        year_Renamed & "," & rotation & ",1,'" & _
-                        item1 & "','" & Val(POpv1) & "','" & _
-                        item2 & "','" & Val(POpv2) & "','" & _
-                        item3 & "','" & Val(POpv3) & "','" & _
-                        item4 & "','" & Val(POpv4) & "','" & _
-                        item5 & "','" & Val(POpv5) & "','" & _
-                        item6 & "','" & Val(POpv6) & "','" & _
-                        item7 & "','" & Val(POpv7) & "','" & _
-                        item8 & "','" & lat1 & "','" & _
+                    sSql(i) = "INSERT INTO FEM (Composite,[Applies To],[year],[month],[day],[APEX Operation Code],operation,[Apex Crop Code]," &
+                        "Crop,[Year in rotation],[Rotation Length],frequency,item1,value1,item2,value2,item3,value3,item4,value4,item5,value5" &
+                        ",item6,value6,item7,value7,item8,value8,item9,value9) VALUES('" &
+                        Initial.Scenario & " " & mvarfilemgt & "_" & SubbasinNum & "','" &
+                        FEMScenario & "'," & year_Renamed & "," & month1 & "," & day1 & ",'" &
+                        pcod & "','" & getData("SELECT description FROM S_A_TILL WHERE APEX_code = " & Val(pcod), myConnection) & "','" & Val(Temp2) & "','" & getData("SELECT description FROM S_A_CROP WHERE APEX_code = " & Val(pcrp), myConnection) & "'," &
+                        year_Renamed & "," & rotation & ",1,'" &
+                        item1 & "','" & Val(POpv1) & "','" &
+                        item2 & "','" & Val(POpv2) & "','" &
+                        item3 & "','" & Val(POpv3) & "','" &
+                        item4 & "','" & Val(POpv4) & "','" &
+                        item5 & "','" & Val(POpv5) & "','" &
+                        item6 & "','" & Val(POpv6) & "','" &
+                        item7 & "','" & Val(POpv7) & "','" &
+                        item8 & "','" & lat1 & "','" &
                         item9 & "','" & lon1 & "')"
                     i += 1
                     'getLocalDataSet(sSql, Initial.Output_files)
@@ -2432,7 +2432,7 @@ End Sub
             MsgBox(ex.Message & " SWATSubbasins " & name)
         End Try
     End Sub
-	
+
     Public Sub APEXSubareas(ByRef SubbasinNum As String, myConnection As OleDb.OleDbConnection)
         Dim Rotation As Integer
         Dim tillName As String = String.Empty
@@ -2785,10 +2785,10 @@ End Sub
             'item7 = 0
             ReDim Preserve sqlcmd(i)
 
-            sqlcmd(i) = "INSERT INTO FEM " & _
-                "(Composite,[Applies To],[Year],[Month],[Day],[APEX Operation Code],Operation,[APEX Crop Code]," & _
-                "Crop,[Year in rotation], [Rotation Length],Frequency, Item1, Value1, Item2, Value2, Item3, " & _
-                "Value3, Item4, Value4, Item5, Value5, Item6, Value6, Item7, Value7, Item8, Value8, Item9, Value9) " & _
+            sqlcmd(i) = "INSERT INTO FEM " &
+                "(Composite,[Applies To],[Year],[Month],[Day],[APEX Operation Code],Operation,[APEX Crop Code]," &
+                "Crop,[Year in rotation], [Rotation Length],Frequency, Item1, Value1, Item2, Value2, Item3, " &
+                "Value3, Item4, Value4, Item5, Value5, Item6, Value6, Item7, Value7, Item8, Value8, Item9, Value9) " &
                 "VALUES ('" & composite & "', '" & applies_to & "', " & year & ", " & month & "," & day & ",'" & Op_code & "', '" & operation & "'," & crop_code & ", '" & crop & "'," & year_rotation & ", " & rotion_length & ", '" & freq & "', '" & item1 & "', '" & value1 & "', '" & item2 & "', '" & value2 & "', '" & item3 & "', '" & value3 & "', '" & item4 & "', '" & value4 & "', '" & item5 & "', '" & value5 & "', '" & item6 & "', '" & value6 & "', '" & item7 & "', '" & value7 & "', '" & item8 & "', '" & value8 & "', '" & item9 & "', '" & value9 & "')"
 
             temp = a.ReadLine
@@ -2803,25 +2803,25 @@ goError:
         MsgBox(Err.Description & "Fucntion-->APEXSubareas, File-->" & mvarfilemgt)
 
     End Sub
-	
-'Function Weather_Code(ByRef fileSub As String) As Object
-'    Dim rec As DataTable
 
-'    rec = New DataTable
+    'Function Weather_Code(ByRef fileSub As String) As Object
+    '    Dim rec As DataTable
 
-'    rec = getDBDataTable("SELECT pcpNumber, File_Number FROM Sub_Included WHERE Subbasin=" & "'" & fileSub & "'")
-'    With rec
-'        Weather_Code = 1
-'        If .Rows.Count > 0 Then
-'            Weather_Code = Initial.File_Number
-'                getDBDataSet("UPDATE Subbasins SET File_Number = " & Initial.File_Number & " WHERE Subbasin=" & "'" & fileSub & "'")
-'            End If
-'    End With
-'    rec.Dispose()
-'    rec = Nothing
+    '    rec = New DataTable
 
-'End Function
-	
+    '    rec = getDBDataTable("SELECT pcpNumber, File_Number FROM Sub_Included WHERE Subbasin=" & "'" & fileSub & "'")
+    '    With rec
+    '        Weather_Code = 1
+    '        If .Rows.Count > 0 Then
+    '            Weather_Code = Initial.File_Number
+    '                getDBDataSet("UPDATE Subbasins SET File_Number = " & Initial.File_Number & " WHERE Subbasin=" & "'" & fileSub & "'")
+    '            End If
+    '    End With
+    '    rec.Dispose()
+    '    rec = Nothing
+
+    'End Function
+
     Public Sub herds(ByRef ownerID As Short)
         'print blanks at the end of the file
         If ownerID = 0 Then

@@ -23,6 +23,7 @@ namespace Ceeot_swapp
             CEEOT_dll.Initial.Dir1 = (System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) 
                                     + @"/resources/databases").Substring(6);
             //CEEOT_dll.Initial.Dir2 = projectManager.CurrentProject.Location;
+            CEEOT_dll.Initial.OrgDir = CEEOT_dll.Initial.Output_files;
 
             string selectedVersion = "";
             if (projectManager.CurrentProject.ApexVersion == SwattProject.ProjectVersion.APEX_0806) selectedVersion += "1";

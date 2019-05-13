@@ -24,6 +24,7 @@ namespace Ceeot_swapp
         private string apexBatFile;
         private string swatVersionBatFile;
         private string swatAuxVersionBatFile;
+        private CEEOT_dll.General DataClass;
 
         public ProjectManager()
         {
@@ -65,6 +66,194 @@ namespace Ceeot_swapp
             CEEOT_dll.Initial.CurrentOption = 24;
         }
 
+        public void createSubAreaFiles()
+        {
+            if (this.validateLandUses()) {
+                return;
+            }
+
+            CEEOT_dll.Initial.subareafile = 2;
+            var d = new System.IO.StreamWriter(
+                System.IO.File.OpenWrite(
+                    CEEOT_dll.Initial.Output_files + "\\" + CEEOT_dll.Initial.suba));
+            d.Close();
+            d.Dispose();
+            string num = "4";
+            CEEOT_dll.Sitefiles.SiteFiles(ref num);
+            CEEOT_dll.Initial.CurrentOption = 25;
+
+            this.createApexBat();
+            this.updateEnvironmentVariables();
+        }
+
+        public void createSoilFiles()
+        {
+            if (this.validateLandUses()) {
+                return;
+            }
+
+            var d = new System.IO.StreamWriter(System.IO.File.OpenWrite(CEEOT_dll.Initial.Output_files + "\\" + CEEOT_dll.Initial.Soil));
+            d.Close();
+            d.Dispose();
+            string num = "5";
+            CEEOT_dll.Sitefiles.SiteFiles(ref num);
+
+            CEEOT_dll.Initial.CurrentOption = 26;
+
+            this.updateEnvironmentVariables();
+        }
+
+        public void createSiteFile()
+        {
+            if (this.validateLandUses())
+            {
+                return;
+            }
+
+            var d = new System.IO.StreamWriter(System.IO.File.OpenWrite(CEEOT_dll.Initial.Output_files + "\\" + CEEOT_dll.Initial.Site));
+            d.Close();
+            d.Dispose();
+
+            string num = "6";
+            CEEOT_dll.Sitefiles.SiteFiles(ref num);
+            CEEOT_dll.Initial.CurrentOption = 27;
+
+            this.updateEnvironmentVariables();
+        }
+
+        public void createWeatherFiles(int pcpages)
+        {
+            if (this.validateLandUses())
+            {
+                return;
+            }
+
+            CEEOT_dll.Control.Apexcont(1);
+            if (pcpages == 0)
+            {
+                if (CEEOT_dll.Initial.Version == "4.0.0"
+                   || CEEOT_dll.Initial.Version == "4.1.0"
+                   || CEEOT_dll.Initial.Version == "4.2.0"
+                   || CEEOT_dll.Initial.Version == "4.3.0"
+                   || CEEOT_dll.Initial.Version == "1.1.0"
+                   || CEEOT_dll.Initial.Version == "1.2.0"
+                   || CEEOT_dll.Initial.Version == "1.3.0")
+                {
+                    this.DataClass.Weather1();
+                }
+                else
+                {
+                    string num = "7";
+                    CEEOT_dll.Sitefiles.SiteFiles(ref num);
+                }
+            }
+        }
+
+        public void createWpmFiles()
+        {
+            Dim d As StreamWriter
+
+            On Error GoTo goError
+
+            If ValidateLandUses() Then
+                Exit Sub
+            End If
+            'Create Control files
+            Wait_Form.Label1(2).Text = "The APEX .wpm Files are Being Created"
+            Wait_Form.Show()
+            Wait_Form.Refresh()
+
+            'fs = CreateObject("Scripting.FileSystemObject")
+            d = New StreamWriter(File.OpenWrite(Initial.Output_files & "\" & Initial.wpm1))
+            d.Close()
+            d.Dispose()
+            d = Nothing
+            Me.Refresh()
+            Create_Files_Form.Tag = "7"
+            Sitefiles.SiteFiles(8)
+            Wait_Form.Check1(2).CheckState = System.Windows.Forms.CheckState.Checked
+            Wait_Form.Check1(2).Visible = True
+            Wait_Form.Show()
+            Wait_Form.Label1(4).Text = "The SWAPP General Files are Being Copied"
+            Wait_Form.Check1(3).CheckState = System.Windows.Forms.CheckState.Checked
+            Wait_Form.Check1(3).Visible = True
+            Wait_Form.Refresh()
+            Call cpyApexSwat()
+            Wait_Form.Label1(5).Text = "The SWAT General Files are Being Copied"
+            Wait_Form.Check1(4).CheckState = System.Windows.Forms.CheckState.Checked
+            Wait_Form.Check1(4).Visible = True
+            Wait_Form.Refresh()
+            Call cpySwat()
+            If Not sender.text = "Create" Then MsgBox("APEX .wpm Files Generated", MsgBoxStyle.OkOnly, "APEX Files Generation")
+            Initial.CurrentOption = 30
+            '*****************************
+            Call UpdateEnvironmentVariables()
+            enable_Menu()
+            Wait_Form.Close()
+        }
+
+        public void createApexBat()
+        {
+            var swFile = new System.IO.StreamWriter(System.IO.File.Create(CEEOT_dll.Initial.Output_files + "\\APEXBat.txt"));
+            swFile.Write("del *.swt");
+
+            var ADORecordset = CEEOT_dll.AccessDB.getDBDataTable("SELECT SubBasin FROM Sub_Included");
+
+            for (int i = 0; i < ADORecordset.Rows.Count; i++)
+            {
+                if (ADORecordset.Rows[i]["SubBasin"] == null 
+                    && (string)ADORecordset.Rows[i]["SubBasin"] == "")
+                {
+                    var tempo = (string)ADORecordset.Rows[i]["Subbasin"];
+                    var temp = tempo.Substring(2, 8);
+                    var apexrunx = new System.IO.StreamWriter(System.IO.File.Create(CEEOT_dll.Initial.Output_files + "\\" + temp + ".dat"));
+                    var apexrunall = new System.IO.StreamReader(System.IO.File.OpenRead(CEEOT_dll.Initial.Output_files + "\\APEXRUN.dat"));
+
+                    while (!apexrunall.EndOfStream)
+                    {
+                        var rec = apexrunall.ReadLine();
+                        if (rec.Substring(0,8) == temp)
+                        {
+                            apexrunx.WriteLine(rec);
+                            swFile.WriteLine("");
+                            swFile.WriteLine("del apexrun.dat");
+                            swFile.WriteLine("copy " + temp + ".dat apexrun.dat");
+                            switch (CEEOT_dll.Initial.Version) {
+                                case "4.1.0":
+                                case "4.0.0":
+                                case "4.2.0": 
+                                case "4.3.0":
+                                    swFile.WriteLine("apex0604.exe");
+                                break;
+                                case "1.1.0":
+                                case "1.2.0": 
+                                case "1.3.0":
+                                    swFile.WriteLine("apex0806.exe");
+                                break;
+                                default:
+                                    swFile.WriteLine("apex2110.exe");
+                                    break;
+                            }
+                        }
+                    }
+
+                    apexrunx.Close();
+                    apexrunx.Dispose();
+                    apexrunall.Close();
+                    apexrunall.Dispose();
+                }
+            }
+
+            swFile.Close();
+            swFile.Dispose();
+            System.IO.File.Copy(
+                CEEOT_dll.Initial.Output_files +
+                "\\APEXRUN.dat", CEEOT_dll.Initial.Output_files +
+                "\\APEXRunAll.dat", 
+                true
+            );
+        }
+
         // copy apex files
         public void cpyApex()
         {
@@ -83,7 +272,24 @@ namespace Ceeot_swapp
                     fileo = CEEOT_dll.Initial.OrgDir + "\\" + rs.Rows[i]["File"];
                     filet = CEEOT_dll.Initial.Output_files + "\\APEX2110.EXE";
                 }
-                System.IO.File.Copy(fileo, filet, true);
+                //System.IO.File.Copy(fileo, filet, true);
+                using (var inputFile = new System.IO.FileStream(
+                        fileo,
+                        System.IO.FileMode.Open,
+                        System.IO.FileAccess.Read,
+                        System.IO.FileShare.ReadWrite
+                    ))
+                {
+                    using (var outputFile = new System.IO.FileStream(filet, System.IO.FileMode.Create))
+                    {
+                        var buffer = new byte[0x10000];
+                        int bytes; 
+                        while ((bytes = inputFile.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            outputFile.Write(buffer, 0, bytes);
+                        }
+                    }
+                }
             }
 
             rs = CEEOT_dll.AccessDB.getDBDataTable("SELECT * FROM apexfile_dat WHERE Version='" + CEEOT_dll.Initial.Version + "' ORDER BY apexfile_dat.Order");
@@ -104,6 +310,19 @@ namespace Ceeot_swapp
             z.Close();
         }
 
+        public void updateEnvironmentVariables()
+        {
+            string query = "SELECT CurrentOption FROM Paths";
+            var proj1 = CEEOT_dll.AccessDB.getDBDataSet(ref query);
+
+            if ((byte)(proj1.Tables[0].Rows[0]["CurrentOption"]) <= CEEOT_dll.Initial.CurrentOption)
+            {
+                query = "UPDATE paths SET CurrentOption=" + CEEOT_dll.Initial.CurrentOption;
+                CEEOT_dll.AccessDB.getDBDataSet(ref query);
+            }
+            proj1.Dispose();
+        }
+
         public void readFigFile()
         {
             String fileName = this.CurrentProject.SwattLocation + @"\fig.fig";
@@ -119,6 +338,7 @@ namespace Ceeot_swapp
                     dbManager.fillBasins(this.CurrentProject, basinName);
                 }
             }
+            file.Close();
         }
 
         public void createProject(String name, String scenario, String location,
@@ -174,6 +394,7 @@ namespace Ceeot_swapp
                 hru.SubBasin = basin.Name;
                 // add hru to sub basin
                 hrus.Add(hru);
+                file.Close();
             }
             basin.Hrus = hrus;
         }
