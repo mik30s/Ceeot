@@ -76,7 +76,7 @@ namespace Ceeot_swapp
             var d = new System.IO.StreamWriter(
                 System.IO.File.OpenWrite(
                     CEEOT_dll.Initial.Output_files + "\\" + CEEOT_dll.Initial.suba));
-            d.Close();
+            d.Close(); 
             d.Dispose();
             string num = "4";
             CEEOT_dll.Sitefiles.SiteFiles(ref num);
@@ -123,8 +123,7 @@ namespace Ceeot_swapp
 
         public void createWeatherFiles(int pcpages)
         {
-            if (this.validateLandUses())
-            {
+            if (this.validateLandUses()) {
                 return;
             }
 
@@ -149,47 +148,51 @@ namespace Ceeot_swapp
             }
         }
 
-        public void createWpmFiles()
+        public void createWmpFiles()
         {
-            Dim d As StreamWriter
+            if (this.validateLandUses()) {
+                return;
+            }
+            var d = new System.IO.StreamWriter(System.IO.File.OpenWrite(CEEOT_dll.Initial.Output_files + "\\" + CEEOT_dll.Initial.wpm1));
+            d.Close();
+            d.Dispose();
 
-            On Error GoTo goError
+            string num = "8";
+            CEEOT_dll.Sitefiles.SiteFiles(ref num);
 
-            If ValidateLandUses() Then
-                Exit Sub
-            End If
-            'Create Control files
-            Wait_Form.Label1(2).Text = "The APEX .wpm Files are Being Created"
-            Wait_Form.Show()
-            Wait_Form.Refresh()
+            this.cpyApexSwat();
 
-            'fs = CreateObject("Scripting.FileSystemObject")
-            d = New StreamWriter(File.OpenWrite(Initial.Output_files & "\" & Initial.wpm1))
-            d.Close()
-            d.Dispose()
-            d = Nothing
-            Me.Refresh()
-            Create_Files_Form.Tag = "7"
-            Sitefiles.SiteFiles(8)
-            Wait_Form.Check1(2).CheckState = System.Windows.Forms.CheckState.Checked
-            Wait_Form.Check1(2).Visible = True
-            Wait_Form.Show()
-            Wait_Form.Label1(4).Text = "The SWAPP General Files are Being Copied"
-            Wait_Form.Check1(3).CheckState = System.Windows.Forms.CheckState.Checked
-            Wait_Form.Check1(3).Visible = True
-            Wait_Form.Refresh()
-            Call cpyApexSwat()
-            Wait_Form.Label1(5).Text = "The SWAT General Files are Being Copied"
-            Wait_Form.Check1(4).CheckState = System.Windows.Forms.CheckState.Checked
-            Wait_Form.Check1(4).Visible = True
-            Wait_Form.Refresh()
-            Call cpySwat()
-            If Not sender.text = "Create" Then MsgBox("APEX .wpm Files Generated", MsgBoxStyle.OkOnly, "APEX Files Generation")
-            Initial.CurrentOption = 30
-            '*****************************
-            Call UpdateEnvironmentVariables()
-            enable_Menu()
-            Wait_Form.Close()
+            //this.cpySwat();
+
+            CEEOT_dll.Initial.CurrentOption = 30;
+            //*****************************
+            this.updateEnvironmentVariables();
+        }
+
+        public void cpyApexSwat()
+        {
+            var SWATF = new System.Data.DataTable();
+
+            SWATF = CEEOT_dll.AccessDB.getDBDataTable("SELECT * FROM SwatApexF WHERE Version='" + CEEOT_dll.Initial.Version + "'");
+
+            for (int i = 0; i < SWATF.Rows.Count - 1; i++) {
+                var name1 = CEEOT_dll.Initial.OrgDir + "\\" + SWATF.Rows[i]["File"];
+                var fileo = CEEOT_dll.Initial.OrgDir + "\\" + SWATF.Rows[i]["File"];
+
+                string filet, filet1;
+
+                if (((String)SWATF.Rows[i]["file"]).ToCharArray()[0] == '*' ) { 
+                    filet = CEEOT_dll.Initial.Output_files + "\\";
+                    filet1 = CEEOT_dll.Initial.Swat_Output + "\\";
+                } else {
+                    filet = CEEOT_dll.Initial.Output_files + "\\" + SWATF.Rows[i]["File"];
+                    filet1 = CEEOT_dll.Initial.Swat_Output + "\\" + SWATF.Rows[i]["File"];
+                }
+
+                System.IO.File.Copy(fileo, filet, true);
+                System.IO.File.Copy(fileo, filet1, true);
+            }
+            SWATF.Dispose();
         }
 
         public void createApexBat()

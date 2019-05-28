@@ -141,7 +141,13 @@ namespace Ceeot_swapp
         }
 
         public void createApex(object sender, RoutedEventArgs e) {
-            //this.projectManager.convertSwattProjectToApex();
+            this.projectManager.createApexControlFiles();
+            this.projectManager.createApexOperationsFiles();
+            this.projectManager.createSubAreaFiles();
+            this.projectManager.createSoilFiles();
+            this.projectManager.createSiteFile();
+            this.projectManager.createWeatherFiles(0);
+            this.projectManager.createWmpFiles();
         }
 
         public void createApexControl(object sender, RoutedEventArgs e)
@@ -156,29 +162,29 @@ namespace Ceeot_swapp
 
         public void createApexSubAreas(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createSubAreaFiles();
         }
 
         public void createApexSoils(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createSoilFiles();
         }
 
 
         public void createApexSite(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createSiteFile();
         }
 
 
         public void createApexWeather(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createWeatherFiles(0);
         }
 
         public void createApexWeatherStation(object sender, RoutedEventArgs e)
         {
-
+            this.projectManager.createWmpFiles();
         }
 
         private void selectAllSubBasins(object sender, RoutedEventArgs e)
